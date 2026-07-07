@@ -589,14 +589,33 @@
     renderAll();
   }
 
+  /* ---------------- mobile nav ---------------- */
+  function closeMobileNav() {
+    const toggle = document.getElementById('aa-nav-toggle');
+    const links = document.getElementById('aa-navlinks');
+    if (!toggle || !links) return;
+    toggle.setAttribute('aria-expanded', 'false');
+    links.classList.remove('is-open');
+  }
+  function bindMobileNav() {
+    const toggle = document.getElementById('aa-nav-toggle');
+    const links = document.getElementById('aa-navlinks');
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      links.classList.toggle('is-open', !open);
+    });
+  }
+
   /* ---------------- init ---------------- */
   function bindStaticEvents() {
     document.addEventListener('click', (e) => {
       const goBtn = e.target.closest('[data-go]');
-      if (goBtn) { goTo(goBtn.getAttribute('data-go')); return; }
+      if (goBtn) { goTo(goBtn.getAttribute('data-go')); closeMobileNav(); return; }
       const langBtn = e.target.closest('[data-lang]');
       if (langBtn) { setLang(langBtn.getAttribute('data-lang')); return; }
     });
+    bindMobileNav();
     document.getElementById('aa-reset-content').addEventListener('click', resetContent);
     document.getElementById('aa-admin-logout').addEventListener('click', adminLogout);
     document.getElementById('aa-admin-login-btn').addEventListener('click', attemptAdminLogin);
