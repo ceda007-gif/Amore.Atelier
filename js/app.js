@@ -245,7 +245,7 @@
       if (key in V) el.textContent = V[key];
     });
     const wa = waHref();
-    ['aa-nav-cta', 'aa-hero-cta1', 'aa-about-cta', 'aa-svc-cta', 'aa-contact-wa', 'aa-footer-wa'].forEach((id) => {
+    ['aa-nav-cta', 'aa-hero-cta1', 'aa-about-cta', 'aa-svc-cta', 'aa-planners-cta', 'aa-contact-wa', 'aa-footer-wa'].forEach((id) => {
       const el = document.getElementById(id);
       if (el) el.href = wa;
     });
