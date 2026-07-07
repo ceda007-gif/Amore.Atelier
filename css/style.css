@@ -73,6 +73,12 @@ a{color:inherit}
 .aa-btn-pill:hover{background:var(--burg2)}
 .aa-dot{width:7px;height:7px;border-radius:50%;background:#7bd88f;box-shadow:0 0 0 3px rgba(123,216,143,.25);flex:none;display:inline-block}
 
+.aa-nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:36px;height:36px;background:none;border:none;cursor:pointer;padding:0;flex:none}
+.aa-nav-toggle span{display:block;width:100%;height:2px;background:var(--burg);transition:transform .3s ease,opacity .3s ease}
+.aa-nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.aa-nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
+.aa-nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
 /* ============================================================
    HERO (Inicio)
    ============================================================ */
@@ -359,9 +365,24 @@ a{color:inherit}
    ============================================================ */
 @media(max-width:860px){
   .aa-hero,.aa-about-block1,.aa-about-block2-inner,.aa-svc-row,.aa-contact-grid{grid-template-columns:1fr !important;min-height:auto !important}
-  #aa-nav .aa-navlink{display:none}
   #aa-heroimg{position:relative !important;inset:auto !important;height:360px}
   .aa-footer-grid{grid-template-columns:1fr !important}
+
+  .aa-nav-toggle{display:flex}
+  .aa-navlinks{
+    position:absolute;top:100%;left:0;right:0;z-index:49;
+    flex-direction:column;align-items:stretch;gap:0;
+    background:var(--cream2);
+    border-top:1px solid rgba(115,1,33,.1);
+    box-shadow:0 20px 40px -20px rgba(82,0,26,.35);
+    max-height:0;overflow:hidden;opacity:0;
+    transition:max-height .35s ease,opacity .25s ease;
+    padding:0 clamp(20px,5vw,64px);
+  }
+  .aa-navlinks.is-open{max-height:80vh;opacity:1;padding:18px clamp(20px,5vw,64px) 26px;overflow-y:auto}
+  .aa-navlink{width:100%;text-align:left;padding:14px 0;border-bottom:1px solid rgba(115,1,33,.08)}
+  .aa-langswitch{margin:16px 0}
+  .aa-btn-pill{width:100%;justify-content:center;margin-top:4px}
 }
 @media(max-width:600px){
   .aa-gallery{columns:1 !important}
