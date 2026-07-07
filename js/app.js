@@ -107,6 +107,42 @@
     { name: 'Pie de página', fields: [{ label: 'Descripción', path: 'footerDesc', ml: true, wide: true }] }
   ];
 
+  /* ---------------- admin auth ---------------- */
+  const ADMIN_AUTH_KEY = 'aa-admin-auth-v1';
+  const ADMIN_PASSWORD_HASH = 'd25920fb603773e2ca4e3064e148afbd07250a0fb295ec1aa063489fefef00b2';
+  async function sha256Hex(text) {
+    const bytes = new TextEncoder().encode(text);
+    const digest = await crypto.subtle.digest('SHA-256', bytes);
+    return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, '0')).join('');
+  }
+  function isAdminAuthed() {
+    try { return localStorage.getItem(ADMIN_AUTH_KEY) === ADMIN_PASSWORD_HASH; } catch (e) { return false; }
+  }
+  function syncAdminGate() {
+    const authed = isAdminAuthed();
+    $('#aa-admin-login').classList.toggle('aa-hidden', authed);
+    $('#aa-admin-content').classList.toggle('aa-hidden', !authed);
+    $$('.aa-admin-only').forEach((el) => el.classList.toggle('aa-hidden', !authed));
+  }
+  async function attemptAdminLogin() {
+    const input = document.getElementById('aa-admin-pass');
+    const error = document.getElementById('aa-admin-login-error');
+    const hash = await sha256Hex(input.value);
+    if (hash === ADMIN_PASSWORD_HASH) {
+      try { localStorage.setItem(ADMIN_AUTH_KEY, hash); } catch (e) {}
+      input.value = '';
+      error.classList.add('aa-hidden');
+      syncAdminGate();
+    } else {
+      error.classList.remove('aa-hidden');
+    }
+  }
+  function adminLogout() {
+    try { localStorage.removeItem(ADMIN_AUTH_KEY); } catch (e) {}
+    syncAdminGate();
+    goTo('inicio');
+  }
+
   const BUTTON_TOGGLES = [
     { key: 'showPortfolio', label: 'Página "Portafolio" · visible en el sitio' },
     { key: 'showNavCta', label: 'Botón "Cotizar" · barra superior' },
@@ -144,6 +180,7 @@
   function syncPage() {
     $$('.aa-page').forEach((el) => el.classList.toggle('aa-hidden', el.getAttribute('data-page') !== state.page));
     $$('[data-nav]').forEach((b) => b.classList.toggle('is-active', b.getAttribute('data-nav') === state.page));
+    if (state.page === 'admin') syncAdminGate();
     if (state.page === 'inicio') {
       const rule = $('.aa-hero-rule');
       if (rule) {
@@ -529,6 +566,11 @@
       if (langBtn) { setLang(langBtn.getAttribute('data-lang')); return; }
     });
     document.getElementById('aa-reset-content').addEventListener('click', resetContent);
+    document.getElementById('aa-admin-logout').addEventListener('click', adminLogout);
+    document.getElementById('aa-admin-login-btn').addEventListener('click', attemptAdminLogin);
+    document.getElementById('aa-admin-pass').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') attemptAdminLogin();
+    });
 
     const fNombre = document.getElementById('aa-f-nombre');
     const fFecha = document.getElementById('aa-f-fecha');
