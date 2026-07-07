@@ -75,9 +75,15 @@
       <img src="assets/monogram.jpeg" alt="Amore Atelier">
       <span>AMORE ATELIER</span>
     </button>
-    <button class="aa-nav-toggle" id="aa-nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="aa-navlinks">
-      <span></span><span></span><span></span>
-    </button>
+    <div class="aa-mobile-bar">
+      <div class="aa-langswitch aa-langswitch-mobile">
+        <button data-lang="es">ES</button>
+        <button data-lang="en">EN</button>
+      </div>
+      <button class="aa-nav-toggle" id="aa-nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="aa-navlinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
     <nav class="aa-navlinks" id="aa-navlinks">
       <button class="aa-navlink" data-nav="inicio" data-go="inicio" data-t="navInicio"></button>
       <button class="aa-navlink" data-nav="nosotros" data-go="nosotros" data-t="navNosotros"></button>
