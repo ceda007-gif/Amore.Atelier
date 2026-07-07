@@ -196,6 +196,8 @@ a{color:inherit}
 .aa-cta-band h2{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(28px,4vw,48px);margin:0 0 26px}
 .aa-cta-band .aa-btn-solid-lg{background:var(--bg);color:var(--burg)}
 .aa-cta-band .aa-btn-solid-lg:hover{background:var(--bg);transform:translateY(-2px)}
+.aa-planners-band .aa-eyebrow{display:block;margin-bottom:14px}
+.aa-planners-band p{font-size:16px;line-height:1.7;opacity:.9;max-width:640px;margin:0 auto 30px}
 
 /* ============================================================
    Servicios (detail rows)

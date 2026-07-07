@@ -16,9 +16,9 @@ window.AA_I18N = {
     gtags: ['Bienvenida', 'Seating', 'Menú', 'Bienvenida', 'Señalética', 'Place cards', 'Seating', 'Bienvenida', 'Minuta'],
     tags: [['Acrílico', 'Espejo', 'Caligrafía', 'Gran formato'], ['Por mesa', 'Alfabético', 'Impreso', 'Montaje'], ['Menús', 'Minutas', 'Place cards', 'Números'], ['Direccionales', 'Programa', 'Bar', 'Detalles']],
     seoBrand: 'Amore Atelier',
-    seoDesc: 'Diseño a medida de papelería, letreros de bienvenida, seating charts y señalética para bodas en Los Cabos y todo Baja California Sur. Piezas hechas a mano. Cotiza por WhatsApp.',
+    seoDesc: 'Piezas hechas a mano para que tu boda en Los Cabos se sienta tuya: letreros de bienvenida, seating charts y menús a medida, con entrega e instalación en tu venue. Cotiza por WhatsApp.',
     seoTitles: {
-      inicio: 'Papelería y señalética de bodas en Los Cabos',
+      inicio: 'Señalética y papelería para bodas en Los Cabos — letreros, seating charts y menús a medida',
       nosotros: 'Nosotros · Estudio de papelería de bodas en Los Cabos',
       servicios: 'Servicios: letreros, seating charts y papelería de boda · Los Cabos',
       portafolio: 'Portafolio de bodas en Los Cabos',
@@ -42,9 +42,9 @@ window.AA_I18N = {
     gtags: ['Welcome', 'Seating', 'Menu', 'Welcome', 'Signage', 'Place cards', 'Seating', 'Welcome', 'Program'],
     tags: [['Acrylic', 'Mirror', 'Calligraphy', 'Large format'], ['By table', 'Alphabetical', 'Printed', 'Display'], ['Menus', 'Programs', 'Place cards', 'Numbers'], ['Directional', 'Program', 'Bar', 'Details']],
     seoBrand: 'Amore Atelier',
-    seoDesc: 'Bespoke wedding stationery, welcome signs, seating charts and signage for weddings in Los Cabos and all of Baja California Sur. Handcrafted pieces. Get a quote on WhatsApp.',
+    seoDesc: 'Hand-crafted pieces that make your Los Cabos wedding feel like yours — custom welcome signs, seating charts and day-of stationery, delivered and installed at your venue. Get a quote on WhatsApp.',
     seoTitles: {
-      inicio: 'Wedding Stationery & Signage in Los Cabos',
+      inicio: 'Wedding Signage & Stationery in Los Cabos — Welcome Signs, Seating Charts & Menus',
       nosotros: 'About us · Wedding stationery studio in Los Cabos',
       servicios: 'Services: welcome signs, seating charts & stationery · Los Cabos',
       portafolio: 'Wedding portfolio in Los Cabos',
@@ -59,15 +59,18 @@ window.AA_I18N = {
 window.AA_DEFAULTS = {
   es: {
     heroLoc: 'Los Cabos, B.C.S.', heroTitleA: 'El arte impreso', heroTitleB: "del 'Sí, acepto'",
-    heroSub: 'Diseñamos las piezas que tus invitados recordarán: letreros de bienvenida, seating charts y papelería de mesa hechos a mano para bodas irrepetibles.',
-    manifesto: 'Cada boda tiene una voz. Nuestro trabajo es imprimirla — en el papel, en la tinta y en cada detalle que reciben tus invitados.',
+    heroSub: 'Letreros de bienvenida, seating charts y papelería de mesa pintados y armados a mano en nuestro taller de Los Cabos — piezas hechas para bodas de destino que no se sienten genéricas.',
+    manifesto: 'Cada boda tiene una voz. Nuestro trabajo es imprimirla a mano — en el papel, en la tinta y en cada detalle que reciben tus invitados.',
     servEyebrow: 'Lo que creamos', servTitle: 'Nuestros servicios', procEyebrow: 'Cómo trabajamos', procTitle: 'Un proceso sin prisas',
     quoteScript: 'con todo el corazón', quoteText: '"Amore Atelier convirtió una idea en la boda que soñábamos. Cada letrero, cada menú, perfecto."', quoteAuthor: 'Ana & Diego — Hotel El Ganzo, Los Cabos',
-    aboutHeading: 'About Us',
+    plannersEyebrow: 'Wedding planners', plannersTitle: 'Tu aliado logístico para cada boda',
+    plannersText: 'Trabajamos codo a codo con planners: mockup de aprobación antes de producir, tiempos de producción claros, y entrega e instalación directo en el venue el día del evento. Sin sorpresas de última hora.',
+    plannersCta: 'Coordinemos tu próxima boda',
+    aboutHeading: 'Sobre nosotros',
     aboutBody1: 'Amore Atelier nació de una pasión por el diseño, el amor y, por supuesto, las bodas. Nos encanta dar vida a las ideas de cada pareja, transformándolas en piezas pensadas con intención y significado que realzan su día especial.',
     aboutBody2: 'Nuestro trabajo se centra en crear armonía, equilibrio estético, coherencia y personalidad, cuidando que cada detalle se sienta refinado y bellamente conectado.',
     aboutBody3: 'Para nosotros es esencial que cada pareja se sienta escuchada, acompañada y segura de que su visión será cuidadosamente traducida en el día de su boda, con atención y cariño.',
-    aboutHeading2: 'About Us',
+    aboutHeading2: 'El equipo detrás',
     aboutFoundersLead: 'Detrás de este proyecto están', aboutFoundersNames: 'Dariana & Aldo', aboutFoundersRest: ', quienes trabajan mano a mano para crear propuestas visuales donde cada detalle refleja profesionalismo, sensibilidad y cariño genuino.',
     svcPageTitle: 'Todo lo impreso de tu boda', svcPageIntro: 'Diseño a medida, papeles seleccionados y acabados cuidados. Cada pieza se coordina para que tu evento se sienta de una sola pieza.', svcCtaTitle: '¿Empezamos tu papelería?',
     portTitle: 'Bodas que hemos vestido',
@@ -75,10 +78,10 @@ window.AA_DEFAULTS = {
     estudioVal: 'Los Cabos, B.C.S.', coberturaVal: 'Toda Baja California Sur', formTitle: 'Solicita tu cotización',
     footerDesc: "El arte impreso del 'Sí, acepto'. Papelería y señalética de boda a medida, desde Los Cabos.",
     services: [
-      { title: 'Letreros de bienvenida', short: 'La primera pieza que ven tus invitados al llegar.', long: 'Grandes formatos en acrílico, espejo, madera o papel. Caligrafía y diseño que anuncian el tono de tu celebración desde la entrada.' },
-      { title: 'Seating charts', short: 'Que cada invitado encuentre su lugar con estilo.', long: 'Planos de mesa claros y bellos: por mesa, alfabético o por familia. Impresos o en soportes elegantes que se vuelven parte de la decoración.' },
-      { title: 'Papelería de mesa', short: 'Menús, minutas y place cards coordinados.', long: 'La papelería que vive sobre la mesa: menús, minutas, place cards y números de mesa, todo dentro de un mismo lenguaje visual.' },
-      { title: 'Señalética del evento', short: 'Guía a tus invitados por cada momento.', long: 'Ceremonia, cóctel, cena y fiesta: señales, letreros direccionales y detalles que hacen que todo fluya sin una sola duda.' }
+      { title: 'Letreros de bienvenida', short: 'La primera pieza que ven tus invitados al llegar.', long: 'Grandes formatos en acrílico, espejo, madera o papel, pintados y calibrados a mano en nuestro taller. El primer vistazo que anuncia el tono de tu celebración desde la entrada del venue.' },
+      { title: 'Seating charts', short: 'Que cada invitado encuentre su lugar con estilo.', long: 'Planos de mesa claros y bellos: por mesa, alfabético o por familia, con instalación resuelta el día del evento para que no sea un pendiente tuyo.' },
+      { title: 'Papelería de mesa', short: 'Menús, minutas y place cards coordinados.', long: 'Menús, minutas, place cards y números de mesa: tu day-of stationery coordinada en un mismo lenguaje visual, lista para tu venue.' },
+      { title: 'Señalética del evento', short: 'Guía a tus invitados por cada momento.', long: 'Ceremonia, cóctel, cena y fiesta: señales, letreros direccionales y detalles instalados en sitio para que todo fluya sin una sola duda.' }
     ],
     steps: [
       { title: 'Conversamos', desc: 'Escuchamos tu historia, tu fecha y tu estética. Todo empieza con una charla sin compromiso.' },
@@ -88,10 +91,13 @@ window.AA_DEFAULTS = {
   },
   en: {
     heroLoc: 'Los Cabos, B.C.S.', heroTitleA: 'The printed art', heroTitleB: "of the 'I do'",
-    heroSub: 'We design the pieces your guests will remember: welcome signs, seating charts and table stationery, handcrafted for unrepeatable weddings.',
-    manifesto: 'Every wedding has a voice. Our job is to print it — on the paper, in the ink, and in every detail your guests receive.',
+    heroSub: 'Hand-crafted welcome signs, seating charts and day-of stationery — bespoke pieces made in our Los Cabos studio for destination weddings that don’t feel off-the-shelf.',
+    manifesto: 'Every wedding has a voice. Our job is to print it by hand — on the paper, in the ink, and in every detail your guests receive.',
     servEyebrow: 'What we create', servTitle: 'Our services', procEyebrow: 'How we work', procTitle: 'An unhurried process',
     quoteScript: 'with all our heart', quoteText: '"Amore Atelier turned an idea into the wedding we dreamed of. Every sign, every menu, perfect."', quoteAuthor: 'Ana & Diego — Hotel El Ganzo, Los Cabos',
+    plannersEyebrow: 'Wedding Planners', plannersTitle: 'Your logistics partner for every wedding',
+    plannersText: 'We work hand in hand with planners: an approval mockup before we print, clear production timelines, and on-site delivery and installation at your venue on the day. No last-minute surprises.',
+    plannersCta: "Let's coordinate your next wedding",
     aboutHeading: 'About Us',
     aboutBody1: "Amore Atelier was born from a passion for design, love and, of course, weddings. We love bringing each couple's ideas to life, transforming them into thoughtfully designed pieces that enhance their special day with intention and meaning.",
     aboutBody2: 'Our work focuses on creating harmony, aesthetic balance, coherence and personality, ensuring every detail feels refined and beautifully connected.',
@@ -104,10 +110,10 @@ window.AA_DEFAULTS = {
     estudioVal: 'Los Cabos, B.C.S.', coberturaVal: 'All of Baja California Sur', formTitle: 'Request your quote',
     footerDesc: "The printed art of the 'I do'. Bespoke wedding stationery and signage, from Los Cabos.",
     services: [
-      { title: 'Welcome signs', short: 'The first piece your guests see on arrival.', long: 'Large formats in acrylic, mirror, wood or paper. Calligraphy and design that announce the tone of your celebration from the entrance.' },
-      { title: 'Seating charts', short: 'So every guest finds their place in style.', long: 'Clear, beautiful table plans: by table, alphabetical or by family. Printed or on elegant displays that become part of the décor.' },
-      { title: 'Table stationery', short: 'Menus, place cards and details in harmony.', long: 'The stationery that lives on the table: menus, day programs, place cards and table numbers, all within one visual language.' },
-      { title: 'Event signage', short: 'Guide your guests through every moment.', long: 'Ceremony, cocktail, dinner and party: signs, directional boards and details that make everything flow without a single doubt.' }
+      { title: 'Welcome signs', short: 'The first piece your guests see on arrival.', long: 'Large-format acrylic, mirror, wood or paper signs, hand-lettered and painted in our studio. Your custom welcome sign sets the tone the moment guests step into the venue.' },
+      { title: 'Seating charts', short: 'So every guest finds their place in style.', long: 'Clear, beautiful seating charts: by table, alphabetical or by family — delivered and installed on-site so it’s one less thing on your day-of checklist.' },
+      { title: 'Table stationery', short: 'Menus, place cards and details in harmony.', long: 'Menus, place cards, table numbers and vow books — your day-of stationery, coordinated in one visual language and ready for your destination wedding.' },
+      { title: 'Event signage', short: 'Guide your guests through every moment.', long: 'Ceremony, cocktail hour, dinner and party: directional signs and details, installed on-site so every moment flows without a doubt.' }
     ],
     steps: [
       { title: 'We talk', desc: 'We listen to your story, your date and your aesthetic. It all starts with a no-obligation chat.' },
