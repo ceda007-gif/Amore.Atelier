@@ -6,20 +6,28 @@
   const $ = (sel, root) => (root || document).querySelector(sel);
   const $$ = (sel, root) => Array.from((root || document).querySelectorAll(sel));
 
-  /* ---------------- persistence helpers ---------------- */
+  /* ---------------- persistence helpers ----------------
+     Text content and button settings live in Firestore (docs
+     content/site and settings/site) so every visitor sees the same
+     thing; only the signed-in admin can write them (enforced by
+     Firestore security rules, not just by hiding the UI). Language
+     preference stays in localStorage since it's per-visitor, not
+     site content. */
   function loadLang() {
     try { const l = localStorage.getItem('aa-lang'); if (l === 'es' || l === 'en') return l; } catch (e) {}
     return 'es';
   }
-  function loadSettings() {
-    const d = { showNavCta: true, showHeroCta1: true, showHeroCta2: true, showPortfolio: false };
-    try {
-      const s = JSON.parse(localStorage.getItem('aa-settings') || 'null');
-      if (s && typeof s === 'object') return Object.assign({}, d, s);
-    } catch (e) {}
-    return d;
+  function defaultSettings() {
+    return { showNavCta: true, showHeroCta1: true, showHeroCta2: true, showPortfolio: false };
   }
-  function saveSettings(s) { try { localStorage.setItem('aa-settings', JSON.stringify(s)); } catch (e) {} }
+  let saveSettingsTimer = null;
+  function saveSettings(s) {
+    clearTimeout(saveSettingsTimer);
+    saveSettingsTimer = setTimeout(() => {
+      window.AA_DB.collection('settings').doc('site').set(s)
+        .catch((e) => console.error('Amore Atelier: no se pudo guardar la configuración.', e));
+    }, 300);
+  }
 
   function deepMerge(base, over) {
     const out = Array.isArray(base) ? base.slice() : Object.assign({}, base);
@@ -32,15 +40,28 @@
     }
     return out;
   }
-  function loadContent() {
-    const d = JSON.parse(JSON.stringify(DEFAULTS));
-    try {
-      const saved = JSON.parse(localStorage.getItem('aa-content-v2') || 'null');
-      if (saved && typeof saved === 'object') return deepMerge(d, saved);
-    } catch (e) {}
-    return d;
+  function defaultContent() { return JSON.parse(JSON.stringify(DEFAULTS)); }
+  let saveContentTimer = null;
+  function saveContent(c) {
+    clearTimeout(saveContentTimer);
+    saveContentTimer = setTimeout(() => {
+      window.AA_DB.collection('content').doc('site').set(c)
+        .catch((e) => console.error('Amore Atelier: no se pudo guardar el contenido.', e));
+    }, 400);
   }
-  function saveContent(c) { try { localStorage.setItem('aa-content-v2', JSON.stringify(c)); } catch (e) {} }
+  function loadRemoteData() {
+    window.AA_DB.collection('content').doc('site').get().then((doc) => {
+      if (doc.exists) { state.content = deepMerge(defaultContent(), doc.data()); renderAll(); }
+    }).catch((e) => console.error('Amore Atelier: no se pudo cargar el contenido.', e));
+
+    window.AA_DB.collection('settings').doc('site').get().then((doc) => {
+      if (doc.exists) {
+        state.settings = Object.assign(defaultSettings(), doc.data());
+        if (state.page === 'portafolio' && !state.settings.showPortfolio) { goTo('inicio'); return; }
+        renderAll();
+      }
+    }).catch((e) => console.error('Amore Atelier: no se pudo cargar la configuración.', e));
+  }
 
   function getByPath(obj, path) {
     return path.split('.').reduce((o, k) => (o == null ? o : o[k]), obj);
@@ -57,8 +78,9 @@
     page: 'inicio',
     lang: loadLang(),
     filter: 'todos',
-    settings: loadSettings(),
-    content: loadContent(),
+    settings: defaultSettings(),
+    content: defaultContent(),
+    adminAuthed: false,
     form: { nombre: '', fecha: '', servicio: '', mensaje: '' }
   };
   state.form.servicio = I18N[state.lang].selectOpts[0];
@@ -107,19 +129,22 @@
     { name: 'Pie de página', fields: [{ label: 'Descripción', path: 'footerDesc', ml: true, wide: true }] }
   ];
 
-  /* ---------------- admin auth ---------------- */
-  const ADMIN_AUTH_KEY = 'aa-admin-auth-v1';
-  const ADMIN_PASSWORD_HASH = 'd25920fb603773e2ca4e3064e148afbd07250a0fb295ec1aa063489fefef00b2';
-  async function sha256Hex(text) {
-    const bytes = new TextEncoder().encode(text);
-    const digest = await crypto.subtle.digest('SHA-256', bytes);
-    return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, '0')).join('');
-  }
-  function isAdminAuthed() {
-    try { return localStorage.getItem(ADMIN_AUTH_KEY) === ADMIN_PASSWORD_HASH; } catch (e) { return false; }
+  /* ---------------- admin auth ----------------
+     Real Firebase Authentication (email/password). The password is
+     verified by Firebase's servers, not by this script, and every
+     Firestore/Storage write is also checked server-side against the
+     signed-in user — so this can't be bypassed from devtools the way
+     a client-only check could. */
+  window.AAIsAdminAuthed = function () { return state.adminAuthed; };
+
+  function wireAuthListener() {
+    window.AA_AUTH.onAuthStateChanged((user) => {
+      state.adminAuthed = !!user;
+      renderAll();
+    });
   }
   function syncAdminGate() {
-    const authed = isAdminAuthed();
+    const authed = state.adminAuthed;
     $('#aa-admin-login').classList.toggle('aa-hidden', authed);
     $('#aa-admin-content').classList.toggle('aa-hidden', !authed);
     $$('.aa-admin-only').forEach((el) => el.classList.toggle('aa-hidden', !authed));
@@ -127,19 +152,20 @@
   async function attemptAdminLogin() {
     const input = document.getElementById('aa-admin-pass');
     const error = document.getElementById('aa-admin-login-error');
-    const hash = await sha256Hex(input.value);
-    if (hash === ADMIN_PASSWORD_HASH) {
-      try { localStorage.setItem(ADMIN_AUTH_KEY, hash); } catch (e) {}
+    const btn = document.getElementById('aa-admin-login-btn');
+    if (!input.value) return;
+    btn.disabled = true;
+    try {
+      await window.AA_AUTH.signInWithEmailAndPassword(window.AA_ADMIN_EMAIL, input.value);
       input.value = '';
       error.classList.add('aa-hidden');
-      syncAdminGate();
-    } else {
+    } catch (e) {
       error.classList.remove('aa-hidden');
     }
+    btn.disabled = false;
   }
   function adminLogout() {
-    try { localStorage.removeItem(ADMIN_AUTH_KEY); } catch (e) {}
-    syncAdminGate();
+    window.AA_AUTH.signOut();
     goTo('inicio');
   }
 
@@ -481,15 +507,17 @@
   }
 
   function renderStaticImageSlots() {
-    document.getElementById('aa-heroimg').appendChild(
-      window.AACreateImageSlot('aa-hero', { placeholder: t().heroPh, className: 'aa-hero-photo' })
-    );
-    document.getElementById('aa-about1-slot').appendChild(
-      window.AACreateImageSlot('aa-about1', { placeholder: 'Foto de la pareja', className: 'aa-about-photo' })
-    );
-    document.getElementById('aa-about2-slot').appendChild(
-      window.AACreateImageSlot('aa-about2', { placeholder: 'Foto de Dariana & Aldo', className: 'aa-about-photo2' })
-    );
+    const heroWrap = document.getElementById('aa-heroimg');
+    clearSlots(heroWrap);
+    heroWrap.appendChild(window.AACreateImageSlot('aa-hero', { placeholder: t().heroPh, className: 'aa-hero-photo' }));
+
+    const about1Wrap = document.getElementById('aa-about1-slot');
+    clearSlots(about1Wrap);
+    about1Wrap.appendChild(window.AACreateImageSlot('aa-about1', { placeholder: 'Foto de la pareja', className: 'aa-about-photo' }));
+
+    const about2Wrap = document.getElementById('aa-about2-slot');
+    clearSlots(about2Wrap);
+    about2Wrap.appendChild(window.AACreateImageSlot('aa-about2', { placeholder: 'Foto de Dariana & Aldo', className: 'aa-about-photo2' }));
   }
   function updateHeroPlaceholder() {
     const ph = document.querySelector('#aa-heroimg .aa-imgslot-placeholder');
@@ -529,6 +557,19 @@
   }
 
   /* ---------------- lang / content actions ---------------- */
+  function renderAll() {
+    renderStaticImageSlots();
+    renderServicesAndSteps();
+    renderGallery();
+    renderContactSelect();
+    renderAdminFields();
+    syncTextBindings();
+    syncVisibilityFlags();
+    syncLangButtons();
+    updateHeroPlaceholder();
+    updateFormSubmitHref();
+    syncAdminGate();
+  }
   function setLang(l) {
     if (l === state.lang) return;
     try { localStorage.setItem('aa-lang', l); } catch (e) {}
@@ -537,24 +578,15 @@
     const idx = oldOpts.indexOf(state.form.servicio);
     state.lang = l;
     state.form.servicio = idx >= 0 ? newOpts[idx] : newOpts[0];
-    renderServicesAndSteps();
-    renderGallery();
-    renderContactSelect();
-    renderAdminFields();
-    syncTextBindings();
-    syncLangButtons();
-    updateHeroPlaceholder();
-    updateFormSubmitHref();
+    renderAll();
     updateSeo();
   }
   function resetContent() {
-    try { localStorage.removeItem('aa-content-v2'); } catch (e) {}
-    state.content = JSON.parse(JSON.stringify(DEFAULTS));
-    renderServicesAndSteps();
-    renderGallery();
-    renderContactSelect();
-    renderAdminFields();
-    syncTextBindings();
+    const fresh = defaultContent();
+    state.content = fresh;
+    window.AA_DB.collection('content').doc('site').set(fresh)
+      .catch((e) => console.error('Amore Atelier: no se pudo restablecer el contenido.', e));
+    renderAll();
   }
 
   /* ---------------- init ---------------- */
@@ -588,15 +620,9 @@
   function init() {
     setupRevealObserver();
     bindStaticEvents();
-    renderStaticImageSlots();
-    renderServicesAndSteps();
-    renderGallery();
-    renderContactSelect();
-    renderAdminFields();
-    syncTextBindings();
-    syncVisibilityFlags();
-    syncLangButtons();
-    updateFormSubmitHref();
+    renderAll();
+    wireAuthListener();
+    loadRemoteData();
     applyRoute();
   }
 
