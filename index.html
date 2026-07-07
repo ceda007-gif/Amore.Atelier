@@ -250,45 +250,59 @@
         <h1>Editar el sitio</h1>
       </div>
       <div class="aa-admin-actions">
-        <button class="aa-btn-ghost" id="aa-reset-content">Restablecer textos</button>
+        <button class="aa-btn-ghost aa-admin-only aa-hidden" id="aa-reset-content">Restablecer textos</button>
+        <button class="aa-btn-ghost aa-admin-only aa-hidden" id="aa-admin-logout">Cerrar sesión</button>
         <button class="aa-btn-solid-sm" data-go="inicio">Ver el sitio &rarr;</button>
       </div>
     </div>
-    <p class="aa-admin-note">Los cambios se guardan automáticamente en este navegador y se ven al instante. Para las imágenes, arrastra un archivo sobre cada recuadro, o haz clic para elegirlo.</p>
-    <div class="aa-admin-langrow">
-      <span>Editando idioma:</span>
-      <div class="aa-admin-langswitch">
-        <button data-lang="es">Español</button>
-        <button data-lang="en">English</button>
+
+    <div class="aa-admin-login" id="aa-admin-login">
+      <div class="aa-admin-login-card">
+        <h2>Acceso privado</h2>
+        <p>Ingresa la contraseña para editar el sitio.</p>
+        <input class="aa-input" type="password" id="aa-admin-pass" autocomplete="current-password">
+        <button class="aa-btn-solid-lg" id="aa-admin-login-btn">Entrar</button>
+        <p class="aa-admin-login-error aa-hidden" id="aa-admin-login-error">Contraseña incorrecta.</p>
       </div>
     </div>
 
-    <div id="aa-admin-sections"></div>
-
-    <div class="aa-admin-card">
-      <h2>Botones</h2>
-      <p>Activa o desactiva los botones de acción del sitio.</p>
-      <div class="aa-toggle-list" id="aa-admin-toggles"></div>
-    </div>
-
-    <div class="aa-admin-card">
-      <h2>Imágenes</h2>
-      <p>Las imágenes son las mismas en ambos idiomas. Arrastra una foto sobre cada recuadro, o haz clic para elegirla. Las medidas indicadas son las recomendadas para mejor calidad.</p>
-
-      <span class="aa-admin-imggroup-label">Portada</span>
-      <div class="aa-admin-img-single">
-        <div id="aa-admin-hero-slot"></div>
-        <span class="aa-admin-img-size">Vertical · recomendado 1200 × 1600 px</span>
+    <div id="aa-admin-content" class="aa-hidden">
+      <p class="aa-admin-note">Los cambios se guardan automáticamente en este navegador y se ven al instante. Para las imágenes, arrastra un archivo sobre cada recuadro, o haz clic para elegirlo.</p>
+      <div class="aa-admin-langrow">
+        <span>Editando idioma:</span>
+        <div class="aa-admin-langswitch">
+          <button data-lang="es">Español</button>
+          <button data-lang="en">English</button>
+        </div>
       </div>
 
-      <span class="aa-admin-imggroup-label">Nosotros</span>
-      <div class="aa-admin-img-grid" id="aa-admin-about-grid"></div>
+      <div id="aa-admin-sections"></div>
 
-      <span class="aa-admin-imggroup-label">Servicios <small>· horizontal, recomendado 1200 × 900 px</small></span>
-      <div class="aa-admin-img-grid aa-svc-grid" id="aa-admin-svc-grid"></div>
+      <div class="aa-admin-card">
+        <h2>Botones</h2>
+        <p>Activa o desactiva los botones de acción del sitio.</p>
+        <div class="aa-toggle-list" id="aa-admin-toggles"></div>
+      </div>
 
-      <span class="aa-admin-imggroup-label">Portafolio <small>· vertical, recomendado 1000 × 1300 px</small></span>
-      <div class="aa-admin-img-grid aa-gal-grid" id="aa-admin-gal-grid"></div>
+      <div class="aa-admin-card">
+        <h2>Imágenes</h2>
+        <p>Las imágenes son las mismas en ambos idiomas. Arrastra una foto sobre cada recuadro, o haz clic para elegirla. Las medidas indicadas son las recomendadas para mejor calidad.</p>
+
+        <span class="aa-admin-imggroup-label">Portada</span>
+        <div class="aa-admin-img-single">
+          <div id="aa-admin-hero-slot"></div>
+          <span class="aa-admin-img-size">Vertical · recomendado 1200 × 1600 px</span>
+        </div>
+
+        <span class="aa-admin-imggroup-label">Nosotros</span>
+        <div class="aa-admin-img-grid" id="aa-admin-about-grid"></div>
+
+        <span class="aa-admin-imggroup-label">Servicios <small>· horizontal, recomendado 1200 × 900 px</small></span>
+        <div class="aa-admin-img-grid aa-svc-grid" id="aa-admin-svc-grid"></div>
+
+        <span class="aa-admin-imggroup-label">Portafolio <small>· vertical, recomendado 1000 × 1300 px</small></span>
+        <div class="aa-admin-img-grid aa-gal-grid" id="aa-admin-gal-grid"></div>
+      </div>
     </div>
   </section>
 
