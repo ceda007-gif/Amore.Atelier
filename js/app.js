@@ -527,7 +527,7 @@
   function renderStaticImageSlots() {
     const heroWrap = document.getElementById('aa-heroimg');
     clearSlots(heroWrap);
-    heroWrap.appendChild(window.AACreateImageSlot('aa-hero', { placeholder: t().heroPh, className: 'aa-hero-photo' }));
+    heroWrap.appendChild(window.AACreateImageSlot('aa-hero', { placeholder: t().heroPh, className: 'aa-hero-photo', eager: true }));
 
     const about1Wrap = document.getElementById('aa-about1-slot');
     clearSlots(about1Wrap);

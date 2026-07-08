@@ -126,6 +126,8 @@
     const img = document.createElement('img');
     img.alt = opts.placeholder || '';
     img.draggable = false;
+    img.loading = opts.eager ? 'eager' : 'lazy';
+    img.decoding = 'async';
 
     const placeholder = document.createElement('div');
     placeholder.className = 'aa-imgslot-placeholder';
