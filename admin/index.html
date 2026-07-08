@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/jpeg" href="../assets/monogram.jpeg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
+
+<title>Panel de edición | Amore Atelier</title>
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div id="aa-root">
+
+  <header id="aa-nav">
+    <button class="aa-brand" data-go="inicio">
+      <img src="../assets/monogram.jpeg" alt="Amore Atelier">
+      <span>AMORE ATELIER</span>
+    </button>
+  </header>
+
+  <main id="aa-app">
+
+  <!-- ===================== ADMIN ===================== -->
+  <section class="aa-admin-section aa-page" data-page="admin">
+    <div class="aa-admin-head">
+      <div>
+        <span class="aa-eyebrow">Panel privado</span>
+        <h1>Editar el sitio</h1>
+      </div>
+      <div class="aa-admin-actions">
+        <button class="aa-btn-ghost aa-admin-only aa-hidden" id="aa-reset-content">Restablecer textos</button>
+        <button class="aa-btn-ghost aa-admin-only aa-hidden" id="aa-admin-logout">Cerrar sesión</button>
+        <button class="aa-btn-solid-sm" data-go="inicio">Ver el sitio &rarr;</button>
+      </div>
+    </div>
+
+    <div class="aa-admin-login" id="aa-admin-login">
+      <div class="aa-admin-login-card">
+        <h2>Acceso privado</h2>
+        <p>Ingresa la contraseña para editar el sitio.</p>
+        <input class="aa-input" type="password" id="aa-admin-pass" autocomplete="current-password">
+        <button class="aa-btn-solid-lg" id="aa-admin-login-btn">Entrar</button>
+        <p class="aa-admin-login-error aa-hidden" id="aa-admin-login-error">Contraseña incorrecta.</p>
+      </div>
+    </div>
+
+    <div id="aa-admin-content" class="aa-hidden">
+      <p class="aa-admin-note">Los cambios se publican para todas las personas que visiten el sitio. Para las imágenes, arrastra un archivo sobre cada recuadro, o haz clic para elegirlo.</p>
+      <div class="aa-admin-langrow">
+        <span>Editando idioma:</span>
+        <div class="aa-admin-langswitch">
+          <button data-lang="es">Español</button>
+          <button data-lang="en">English</button>
+        </div>
+      </div>
+
+      <div id="aa-admin-sections"></div>
+
+      <div class="aa-admin-card">
+        <h2>Botones</h2>
+        <p>Activa o desactiva los botones de acción del sitio.</p>
+        <div class="aa-toggle-list" id="aa-admin-toggles"></div>
+      </div>
+
+      <div class="aa-admin-card">
+        <h2>Imágenes</h2>
+        <p>Las imágenes son las mismas en ambos idiomas. Arrastra una foto sobre cada recuadro, o haz clic para elegirla. Las medidas indicadas son las recomendadas para mejor calidad.</p>
+
+        <span class="aa-admin-imggroup-label">Portada</span>
+        <div class="aa-admin-img-single">
+          <div id="aa-admin-hero-slot"></div>
+          <span class="aa-admin-img-size">Vertical · recomendado 1200 × 1600 px</span>
+        </div>
+
+        <span class="aa-admin-imggroup-label">Nosotros</span>
+        <div class="aa-admin-img-grid" id="aa-admin-about-grid"></div>
+
+        <span class="aa-admin-imggroup-label">Servicios <small>· horizontal, recomendado 1200 × 900 px</small></span>
+        <div class="aa-admin-img-grid aa-svc-grid" id="aa-admin-svc-grid"></div>
+
+        <span class="aa-admin-imggroup-label">Portafolio <small>· vertical, recomendado 1000 × 1300 px</small></span>
+        <div class="aa-admin-img-grid aa-gal-grid" id="aa-admin-gal-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+</div>
+
+<script>window.AA_SITE_LANG = 'es'; window.AA_ASSET_BASE = '../'; window.AA_SITE_BASE = '../'; window.AA_DEFAULT_PAGE = 'admin';</script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-storage-compat.js" defer></script>
+<script src="../js/firebase-init.js" defer></script>
+<script src="../js/content.js" defer></script>
+<script src="../js/imageslot.js" defer></script>
+<script src="../js/app.js" defer></script>
+</body>
+</html>
