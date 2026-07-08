@@ -314,6 +314,7 @@ a{color:inherit}
   border:none;padding:0;width:100%;cursor:default;text-align:left;
 }
 .aa-imgslot.has-image{cursor:zoom-in}
+.aa-imgslot.is-editable{cursor:pointer}
 .aa-imgslot.is-editable.has-image{cursor:grab}
 .aa-imgslot.is-editable.is-repositioning{cursor:grabbing}
 .aa-imgslot.is-editable.has-image img{touch-action:none}

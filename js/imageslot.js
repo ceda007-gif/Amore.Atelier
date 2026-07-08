@@ -144,22 +144,27 @@
         img.style.display = 'block';
         placeholder.style.display = 'none';
         el.classList.add('has-image');
-        el.setAttribute('role', 'button');
-        el.setAttribute('tabindex', '0');
         el.setAttribute('aria-label', 'Ver imagen completa');
       } else {
         img.style.display = 'none';
         placeholder.style.display = 'flex';
         el.classList.remove('has-image');
+        if (editable) el.setAttribute('aria-label', 'Subir imagen');
+        else el.removeAttribute('aria-label');
+      }
+      if (src || editable) {
+        el.setAttribute('role', 'button');
+        el.setAttribute('tabindex', '0');
+      } else {
         el.removeAttribute('role');
         el.removeAttribute('tabindex');
-        el.removeAttribute('aria-label');
       }
     }
     refresh();
     const unsubscribe = subscribe(id, refresh);
     el._aaUnsubscribe = unsubscribe;
 
+    let input = null;
     let dragMoved = false;
     el.addEventListener('click', (e) => {
       // Some slots (e.g. the home services cards) sit inside another
@@ -167,14 +172,14 @@
       // on it ourselves, so it doesn't also navigate away.
       if (dragMoved) { dragMoved = false; e.stopPropagation(); return; }
       const src = getSrc(id);
-      if (src) { e.stopPropagation(); openLightbox(src, opts.placeholder); }
+      if (src) { e.stopPropagation(); openLightbox(src, opts.placeholder); return; }
+      if (editable && input) { e.stopPropagation(); input.click(); }
     });
     el.addEventListener('keydown', (e) => {
-      if ((e.key === 'Enter' || e.key === ' ') && getSrc(id)) {
-        e.preventDefault();
-        e.stopPropagation();
-        openLightbox(getSrc(id), opts.placeholder);
-      }
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const src = getSrc(id);
+      if (src) { e.preventDefault(); e.stopPropagation(); openLightbox(src, opts.placeholder); return; }
+      if (editable && input) { e.preventDefault(); e.stopPropagation(); input.click(); }
     });
 
     if (editable) {
@@ -182,6 +187,11 @@
       dropzone.className = 'aa-imgslot-dropzone';
       dropzone.textContent = 'Suelta la foto aquí';
       el.appendChild(dropzone);
+
+      input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      el.appendChild(input);
 
       let uploading = false;
       function handleFile(file) {
@@ -192,6 +202,7 @@
           .catch((e) => console.error('Amore Atelier: no se pudo subir la imagen.', e))
           .then(() => { uploading = false; el.classList.remove('is-uploading'); });
       }
+      input.addEventListener('change', () => { if (input.files[0]) handleFile(input.files[0]); input.value = ''; });
       el.addEventListener('dragover', (e) => { e.preventDefault(); el.classList.add('is-dragover'); });
       el.addEventListener('dragleave', () => el.classList.remove('is-dragover'));
       el.addEventListener('drop', (e) => {
