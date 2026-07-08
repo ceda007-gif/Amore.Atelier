@@ -14,8 +14,7 @@
      preference stays in localStorage since it's per-visitor, not
      site content. */
   function loadLang() {
-    try { const l = localStorage.getItem('aa-lang'); if (l === 'es' || l === 'en') return l; } catch (e) {}
-    return 'es';
+    return window.AA_SITE_LANG === 'en' ? 'en' : 'es';
   }
   function defaultSettings() {
     return { showNavCta: true, showHeroCta1: true, showHeroCta2: true, showPortfolio: false };
@@ -122,6 +121,12 @@
       { label: 'Paso 2 · título', path: 'steps.1.title' }, { label: 'Paso 2 · texto', path: 'steps.1.desc', ml: true },
       { label: 'Paso 3 · título', path: 'steps.2.title' }, { label: 'Paso 3 · texto', path: 'steps.2.desc', ml: true }
     ] },
+    { name: 'Inicio · Wedding planners', fields: [
+      { label: 'Etiqueta', path: 'plannersEyebrow' },
+      { label: 'Título', path: 'plannersTitle' },
+      { label: 'Texto', path: 'plannersText', ml: true, wide: true },
+      { label: 'Texto del botón', path: 'plannersCta' }
+    ] },
     { name: 'Inicio · Testimonio', fields: [{ label: 'Manuscrito', path: 'quoteScript' }, { label: 'Cita', path: 'quoteText', ml: true, wide: true }, { label: 'Autor', path: 'quoteAuthor', wide: true }] },
     { name: 'Página Servicios', fields: [{ label: 'Título', path: 'svcPageTitle' }, { label: 'Intro', path: 'svcPageIntro', ml: true, wide: true }, { label: 'Título del CTA', path: 'svcCtaTitle' }] },
     { name: 'Portafolio', fields: [{ label: 'Título', path: 'portTitle', wide: true }] },
@@ -145,8 +150,11 @@
   }
   function syncAdminGate() {
     const authed = state.adminAuthed;
-    $('#aa-admin-login').classList.toggle('aa-hidden', authed);
-    $('#aa-admin-content').classList.toggle('aa-hidden', !authed);
+    const loginEl = $('#aa-admin-login');
+    const contentEl = $('#aa-admin-content');
+    if (!loginEl || !contentEl) return; // no admin editor on this document
+    loginEl.classList.toggle('aa-hidden', authed);
+    contentEl.classList.toggle('aa-hidden', !authed);
     $$('.aa-admin-only').forEach((el) => el.classList.toggle('aa-hidden', !authed));
   }
   async function attemptAdminLogin() {
@@ -183,6 +191,11 @@
     return ROUTES.includes(h) ? h : 'inicio';
   }
   function goTo(page) {
+    if (!document.querySelector('.aa-page[data-page="' + page + '"]')) {
+      // e.g. the admin editor only lives on the primary (Spanish) site
+      location.href = '../#/' + page;
+      return;
+    }
     const target = page === 'inicio' ? '' : '/' + page;
     if (location.hash === '#' + target || (target === '' && (location.hash === '' || location.hash === '#'))) {
       applyRoute();
@@ -194,6 +207,10 @@
     let p = pageFromHash();
     if (p === 'portafolio' && !state.settings.showPortfolio) {
       location.hash = '';
+      return;
+    }
+    if (!document.querySelector('.aa-page[data-page="' + p + '"]')) {
+      location.href = '../#/' + p;
       return;
     }
     state.page = p;
@@ -388,8 +405,9 @@
   }
 
   function renderAdminFields() {
-    const C = c();
     const container = document.getElementById('aa-admin-sections');
+    if (!container) return; // no admin editor on this document
+    const C = c();
     container.innerHTML = '';
     ADMIN_SECTIONS.forEach((sec) => {
       const card = document.createElement('div');
@@ -570,9 +588,12 @@
     updateFormSubmitHref();
     syncAdminGate();
   }
+  /* Used only by the admin panel's own "Editando idioma" toggle, to edit
+     either language's content fields without leaving this document. The
+     site's own language is now a URL you navigate to (see goToLangSite),
+     not something visitors switch in place. */
   function setLang(l) {
     if (l === state.lang) return;
-    try { localStorage.setItem('aa-lang', l); } catch (e) {}
     const oldOpts = I18N[state.lang].selectOpts;
     const newOpts = I18N[l].selectOpts;
     const idx = oldOpts.indexOf(state.form.servicio);
@@ -580,6 +601,14 @@
     state.form.servicio = idx >= 0 ? newOpts[idx] : newOpts[0];
     renderAll();
     updateSeo();
+  }
+  function syncSiteLangButtons() {
+    $$('[data-site-lang]').forEach((b) => b.classList.toggle('is-active', b.getAttribute('data-site-lang') === window.AA_SITE_LANG));
+  }
+  function goToLangSite(l) {
+    if (l === window.AA_SITE_LANG) return;
+    const target = l === 'en' ? 'en/' : '../';
+    location.href = target + location.hash;
   }
   function resetContent() {
     const fresh = defaultContent();
@@ -612,16 +641,22 @@
     document.addEventListener('click', (e) => {
       const goBtn = e.target.closest('[data-go]');
       if (goBtn) { goTo(goBtn.getAttribute('data-go')); closeMobileNav(); return; }
+      const siteLangBtn = e.target.closest('[data-site-lang]');
+      if (siteLangBtn) { goToLangSite(siteLangBtn.getAttribute('data-site-lang')); return; }
       const langBtn = e.target.closest('[data-lang]');
       if (langBtn) { setLang(langBtn.getAttribute('data-lang')); return; }
     });
     bindMobileNav();
-    document.getElementById('aa-reset-content').addEventListener('click', resetContent);
-    document.getElementById('aa-admin-logout').addEventListener('click', adminLogout);
-    document.getElementById('aa-admin-login-btn').addEventListener('click', attemptAdminLogin);
-    document.getElementById('aa-admin-pass').addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') attemptAdminLogin();
-    });
+    syncSiteLangButtons();
+    // The admin editor only exists on the primary (Spanish) site.
+    const resetBtn = document.getElementById('aa-reset-content');
+    const logoutBtn = document.getElementById('aa-admin-logout');
+    const loginBtn = document.getElementById('aa-admin-login-btn');
+    const passInput = document.getElementById('aa-admin-pass');
+    if (resetBtn) resetBtn.addEventListener('click', resetContent);
+    if (logoutBtn) logoutBtn.addEventListener('click', adminLogout);
+    if (loginBtn) loginBtn.addEventListener('click', attemptAdminLogin);
+    if (passInput) passInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') attemptAdminLogin(); });
 
     const fNombre = document.getElementById('aa-f-nombre');
     const fFecha = document.getElementById('aa-f-fecha');
