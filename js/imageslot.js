@@ -5,7 +5,7 @@
    and drag-to-reposition affordances — everyone else can still click a
    photo to view it full-size. */
 (function () {
-  const MAX_DIM = 1400;
+  const MAX_DIM = 1200;
   let cache = {};
   const listeners = {}; // id -> Set of callbacks
 
@@ -58,7 +58,7 @@
         const canvas = document.createElement('canvas');
         canvas.width = w; canvas.height = h;
         canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        canvas.toBlob((blob) => done(blob || null), 'image/webp', 0.85);
+        canvas.toBlob((blob) => done(blob || null), 'image/webp', 0.78);
       };
       img.onerror = () => done(null);
       img.src = reader.result;
