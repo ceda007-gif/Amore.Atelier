@@ -297,7 +297,7 @@
 
   /* ---------------- dynamic list builders ---------------- */
   function clearSlots(container) {
-    $$('.aa-imgslot', container).forEach((el) => { if (el._aaUnsubscribe) el._aaUnsubscribe(); });
+    $$('.aa-imgslot, .aa-admin-img-actions', container).forEach((el) => { if (el._aaUnsubscribe) el._aaUnsubscribe(); });
     container.innerHTML = '';
   }
 
@@ -487,10 +487,45 @@
     });
   }
 
+  function appendImageActions(item, id) {
+    const actions = document.createElement('div');
+    actions.className = 'aa-admin-img-actions';
+
+    const changeBtn = document.createElement('button');
+    changeBtn.type = 'button';
+    changeBtn.className = 'aa-admin-img-action';
+    changeBtn.textContent = 'Cambiar foto';
+    changeBtn.addEventListener('click', () => {
+      const input = item.querySelector('.aa-imgslot input[type="file"]');
+      if (input) input.click();
+    });
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.type = 'button';
+    deleteBtn.className = 'aa-admin-img-action aa-admin-img-action-danger';
+    deleteBtn.textContent = 'Eliminar foto';
+    deleteBtn.addEventListener('click', () => {
+      if (!window.confirm('¿Quitar esta foto? Volverá al recuadro vacío.')) return;
+      window.AAImageStore.clearSrc(id).catch((e) => console.error('Amore Atelier: no se pudo eliminar la imagen.', e));
+    });
+
+    actions.appendChild(changeBtn);
+    actions.appendChild(deleteBtn);
+    item.appendChild(actions);
+
+    const syncDeleteVisibility = () => deleteBtn.classList.toggle('aa-hidden', !window.AAImageStore.hasCustom(id));
+    syncDeleteVisibility();
+    actions._aaUnsubscribe = window.AAImageStore.subscribe(id, syncDeleteVisibility);
+  }
+
   function renderAdminImageGroups() {
     const heroWrap = document.getElementById('aa-admin-hero-slot');
     clearSlots(heroWrap);
     heroWrap.appendChild(window.AACreateImageSlot('aa-hero', { placeholder: 'Foto principal (hero)', className: 'aa-admin-thumb-400' }));
+    const heroContainer = heroWrap.closest('.aa-admin-img-single') || heroWrap;
+    const oldHeroActions = heroContainer.querySelector('.aa-admin-img-actions');
+    if (oldHeroActions) { if (oldHeroActions._aaUnsubscribe) oldHeroActions._aaUnsubscribe(); oldHeroActions.remove(); }
+    appendImageActions(heroContainer, 'aa-hero');
 
     const aboutGrid = document.getElementById('aa-admin-about-grid');
     clearSlots(aboutGrid);
@@ -505,6 +540,7 @@
       size.className = 'aa-admin-img-size';
       size.textContent = d.size;
       item.appendChild(size);
+      appendImageActions(item, d.id);
       aboutGrid.appendChild(item);
     });
 
@@ -519,6 +555,7 @@
       size.className = 'aa-admin-img-size';
       size.textContent = '1200 × 900 px';
       item.appendChild(size);
+      appendImageActions(item, id);
       svcGrid.appendChild(item);
     });
 
@@ -527,11 +564,13 @@
     for (let i = 0; i < 9; i++) {
       const item = document.createElement('div');
       item.className = 'aa-admin-img-item';
-      item.appendChild(window.AACreateImageSlot('aa-g' + i, { placeholder: 'Foto ' + (i + 1), className: 'aa-admin-thumb-120' }));
+      const id = 'aa-g' + i;
+      item.appendChild(window.AACreateImageSlot(id, { placeholder: 'Foto ' + (i + 1), className: 'aa-admin-thumb-120' }));
       const size = document.createElement('span');
       size.className = 'aa-admin-img-size';
       size.textContent = '1000 × 1300 px';
       item.appendChild(size);
+      appendImageActions(item, id);
       galGrid.appendChild(item);
     }
   }
