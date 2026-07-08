@@ -184,16 +184,26 @@
     { key: 'showHeroCta2', label: 'Botón "Ver portafolio" · portada' }
   ];
 
-  /* ---------------- routing ---------------- */
+  /* ---------------- routing ----------------
+     The site is split across up to three separate documents (/, /en/,
+     /admin/), each containing only the .aa-page sections relevant to
+     it. If a requested page's section isn't in THIS document, we
+     redirect to wherever it actually lives: window.AA_ADMIN_BASE for
+     the admin editor, window.AA_SITE_BASE for everything else (set
+     per-page alongside AA_SITE_LANG/AA_ASSET_BASE). */
   const ROUTES = ['inicio', 'nosotros', 'servicios', 'portafolio', 'contacto', 'admin'];
   function pageFromHash() {
     const h = (location.hash || '').replace(/^#\/?/, '');
-    return ROUTES.includes(h) ? h : 'inicio';
+    return ROUTES.includes(h) ? h : (window.AA_DEFAULT_PAGE || 'inicio');
+  }
+  function redirectForMissingPage(page) {
+    location.href = page === 'admin'
+      ? (window.AA_ADMIN_BASE || '../admin/')
+      : (window.AA_SITE_BASE || '../') + '#/' + page;
   }
   function goTo(page) {
     if (!document.querySelector('.aa-page[data-page="' + page + '"]')) {
-      // e.g. the admin editor only lives on the primary (Spanish) site
-      location.href = '../#/' + page;
+      redirectForMissingPage(page);
       return;
     }
     const target = page === 'inicio' ? '' : '/' + page;
@@ -210,7 +220,7 @@
       return;
     }
     if (!document.querySelector('.aa-page[data-page="' + p + '"]')) {
-      location.href = '../#/' + p;
+      redirectForMissingPage(p);
       return;
     }
     state.page = p;
@@ -292,11 +302,12 @@
   }
 
   function renderServicesAndSteps() {
+    const grid = document.getElementById('aa-services-grid');
+    if (!grid) return; // this document has no public pages (e.g. the admin editor)
     const C = c(), T = t();
     const svcSlots = ['aa-svc1', 'aa-svc2', 'aa-svc3', 'aa-svc4'];
 
     // Home services grid
-    const grid = document.getElementById('aa-services-grid');
     clearSlots(grid);
     C.services.forEach((svc, i) => {
       const card = document.createElement('button');
@@ -354,11 +365,12 @@
   }
 
   function renderGallery() {
+    const filtersEl = document.getElementById('aa-filters');
+    if (!filtersEl) return; // this document has no public pages (e.g. the admin editor)
     const T = t();
     const heights = ['360px', '260px', '300px', '340px', '280px', '380px', '300px', '260px', '340px'];
     const cats = ['letreros', 'seating', 'papeleria', 'letreros', 'senaletica', 'papeleria', 'seating', 'letreros', 'papeleria'];
 
-    const filtersEl = document.getElementById('aa-filters');
     filtersEl.innerHTML = '';
     [{ key: 'todos' }, { key: 'letreros' }, { key: 'seating' }, { key: 'papeleria' }, { key: 'senaletica' }].forEach((f) => {
       const btn = document.createElement('button');
@@ -388,8 +400,9 @@
   }
 
   function renderContactSelect() {
-    const T = t();
     const sel = document.getElementById('aa-f-servicio');
+    if (!sel) return; // this document has no public pages (e.g. the admin editor)
+    const T = t();
     const prevValue = sel.value;
     const prevOpts = $$('option', sel).map((o) => o.value);
     const prevIdx = prevOpts.indexOf(prevValue);
@@ -526,6 +539,7 @@
 
   function renderStaticImageSlots() {
     const heroWrap = document.getElementById('aa-heroimg');
+    if (!heroWrap) return; // this document has no public pages (e.g. the admin editor)
     clearSlots(heroWrap);
     heroWrap.appendChild(window.AACreateImageSlot('aa-hero', { placeholder: t().heroPh, className: 'aa-hero-photo', eager: true }));
 
@@ -629,6 +643,7 @@
   function bindMobileNav() {
     const toggle = document.getElementById('aa-nav-toggle');
     const links = document.getElementById('aa-navlinks');
+    if (!toggle || !links) return; // no hamburger nav on this document (e.g. the admin editor)
     toggle.addEventListener('click', () => {
       const open = toggle.getAttribute('aria-expanded') === 'true';
       toggle.setAttribute('aria-expanded', String(!open));
@@ -662,10 +677,10 @@
     const fFecha = document.getElementById('aa-f-fecha');
     const fServicio = document.getElementById('aa-f-servicio');
     const fMensaje = document.getElementById('aa-f-mensaje');
-    fNombre.addEventListener('input', () => { state.form.nombre = fNombre.value; updateFormSubmitHref(); });
-    fFecha.addEventListener('input', () => { state.form.fecha = fFecha.value; updateFormSubmitHref(); });
-    fServicio.addEventListener('change', () => { state.form.servicio = fServicio.value; updateFormSubmitHref(); });
-    fMensaje.addEventListener('input', () => { state.form.mensaje = fMensaje.value; updateFormSubmitHref(); });
+    if (fNombre) fNombre.addEventListener('input', () => { state.form.nombre = fNombre.value; updateFormSubmitHref(); });
+    if (fFecha) fFecha.addEventListener('input', () => { state.form.fecha = fFecha.value; updateFormSubmitHref(); });
+    if (fServicio) fServicio.addEventListener('change', () => { state.form.servicio = fServicio.value; updateFormSubmitHref(); });
+    if (fMensaje) fMensaje.addEventListener('input', () => { state.form.mensaje = fMensaje.value; updateFormSubmitHref(); });
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('hashchange', applyRoute);
