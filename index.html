@@ -16,6 +16,9 @@
 <meta name="author" content="Amore Atelier">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://ceda007-gif.github.io/Amore.Atelier/">
+<link rel="alternate" hreflang="es" href="https://ceda007-gif.github.io/Amore.Atelier/">
+<link rel="alternate" hreflang="en" href="https://ceda007-gif.github.io/Amore.Atelier/en/">
+<link rel="alternate" hreflang="x-default" href="https://ceda007-gif.github.io/Amore.Atelier/">
 <meta name="geo.region" content="MX-BCS">
 <meta name="geo.placename" content="Los Cabos, Baja California Sur">
 <meta name="geo.position" content="22.8905;-109.9167">
@@ -77,8 +80,8 @@
     </button>
     <div class="aa-mobile-bar">
       <div class="aa-langswitch aa-langswitch-mobile">
-        <button data-lang="es">ES</button>
-        <button data-lang="en">EN</button>
+        <button data-site-lang="es" class="is-active">ES</button>
+        <button data-site-lang="en">EN</button>
       </div>
       <button class="aa-nav-toggle" id="aa-nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="aa-navlinks">
         <span></span><span></span><span></span>
@@ -91,8 +94,8 @@
       <button class="aa-navlink aa-hidden" data-nav="portafolio" data-go="portafolio" data-t="navPortafolio" data-if="showPortfolio">Portafolio</button>
       <button class="aa-navlink" data-nav="contacto" data-go="contacto" data-t="navContacto">Contacto</button>
       <div class="aa-langswitch">
-        <button data-lang="es">ES</button>
-        <button data-lang="en">EN</button>
+        <button data-site-lang="es" class="is-active">ES</button>
+        <button data-site-lang="en">EN</button>
       </div>
       <a class="aa-btn-pill" id="aa-nav-cta" data-if="showNavCta" target="_blank" rel="noopener">
         <span class="aa-dot"></span><span data-t="cotizar">Cotizar</span>
@@ -444,6 +447,7 @@
 
 </div>
 
+<script>window.AA_SITE_LANG = 'es'; window.AA_ASSET_BASE = '';</script>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>

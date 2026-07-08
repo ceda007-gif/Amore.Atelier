@@ -29,7 +29,7 @@
   function getSrc(id) {
     if (cache[id]) return cache[id];
     const def = (window.AA_IMAGE_SLOTS[id] || {}).defaultSrc;
-    return def || null;
+    return def ? (window.AA_ASSET_BASE || '') + def : null;
   }
   function hasCustom(id) {
     return !!cache[id];
