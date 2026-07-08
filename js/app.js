@@ -121,6 +121,12 @@
       { label: 'Paso 2 · título', path: 'steps.1.title' }, { label: 'Paso 2 · texto', path: 'steps.1.desc', ml: true },
       { label: 'Paso 3 · título', path: 'steps.2.title' }, { label: 'Paso 3 · texto', path: 'steps.2.desc', ml: true }
     ] },
+    { name: 'Inicio · Wedding planners', fields: [
+      { label: 'Etiqueta', path: 'plannersEyebrow' },
+      { label: 'Título', path: 'plannersTitle' },
+      { label: 'Texto', path: 'plannersText', ml: true, wide: true },
+      { label: 'Texto del botón', path: 'plannersCta' }
+    ] },
     { name: 'Inicio · Testimonio', fields: [{ label: 'Manuscrito', path: 'quoteScript' }, { label: 'Cita', path: 'quoteText', ml: true, wide: true }, { label: 'Autor', path: 'quoteAuthor', wide: true }] },
     { name: 'Página Servicios', fields: [{ label: 'Título', path: 'svcPageTitle' }, { label: 'Intro', path: 'svcPageIntro', ml: true, wide: true }, { label: 'Título del CTA', path: 'svcCtaTitle' }] },
     { name: 'Portafolio', fields: [{ label: 'Título', path: 'portTitle', wide: true }] },
