@@ -81,6 +81,18 @@
     });
   }
 
+  function clearSrc(id) {
+    if (!window.AAIsAdminAuthed || !window.AAIsAdminAuthed()) return Promise.reject(new Error('not authenticated'));
+    const ref = window.AA_STORAGE.ref().child('images/' + id + '.webp');
+    return ref.delete()
+      .catch((e) => { if (e && e.code !== 'storage/object-not-found') throw e; })
+      .then(() => window.AA_DB.collection('images').doc('site').set({
+        [id]: firebase.firestore.FieldValue.delete(),
+        [id + '_pos']: firebase.firestore.FieldValue.delete()
+      }, { merge: true }))
+      .then(() => { delete cache[id]; delete cache[id + '_pos']; notify(id); });
+  }
+
   /* ---------------- shared lightbox ---------------- */
   let lightboxEl = null;
   function ensureLightbox() {
@@ -251,6 +263,6 @@
     return el;
   }
 
-  window.AAImageStore = { getSrc, hasCustom, subscribe, ready };
+  window.AAImageStore = { getSrc, hasCustom, subscribe, clearSrc, ready };
   window.AACreateImageSlot = createImageSlot;
 })();
