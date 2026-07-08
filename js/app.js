@@ -307,13 +307,13 @@
     const C = c(), T = t();
     const svcSlots = ['aa-svc1', 'aa-svc2', 'aa-svc3', 'aa-svc4'];
 
-    // Home services grid
-    clearSlots(grid);
+    // Home services grid — text only; the photos live on the Servicios
+    // page so the home page doesn't have to load them at all.
+    grid.innerHTML = '';
     C.services.forEach((svc, i) => {
       const card = document.createElement('button');
-      card.className = 'aa-svc-card';
+      card.className = 'aa-svc-card aa-svc-card-textonly';
       card.setAttribute('data-reveal', '');
-      const slot = window.AACreateImageSlot(svcSlots[i], { placeholder: svc.title, className: 'aa-svc-card-photo' });
       const body = document.createElement('div');
       body.className = 'aa-svc-body';
       body.innerHTML =
@@ -321,7 +321,6 @@
         '<h3></h3><p></p>';
       body.querySelector('h3').textContent = svc.title;
       body.querySelector('p').textContent = svc.short;
-      card.appendChild(slot);
       card.appendChild(body);
       card.addEventListener('click', () => goTo('servicios'));
       grid.appendChild(card);
@@ -601,6 +600,9 @@
     updateHeroPlaceholder();
     updateFormSubmitHref();
     syncAdminGate();
+    // Re-render rebuilds .aa-svc-card/.aa-step nodes from scratch, so any
+    // reveal-on-scroll registration from a previous pass is gone with them.
+    refreshReveal();
   }
   /* Used only by the admin panel's own "Editando idioma" toggle, to edit
      either language's content fields without leaving this document. The
