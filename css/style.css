@@ -377,6 +377,8 @@ a{color:inherit}
    ============================================================ */
 @media(max-width:860px){
   .aa-hero,.aa-about-block1,.aa-about-block2-inner,.aa-svc-row,.aa-contact-grid{grid-template-columns:1fr !important;min-height:auto !important}
+  .aa-svc-row-photo{order:2 !important}
+  .aa-svc-row>div:not(.aa-svc-row-photo){order:1 !important}
   #aa-heroimg{position:relative !important;inset:auto !important;height:360px}
   .aa-footer-grid{grid-template-columns:1fr !important}
 
