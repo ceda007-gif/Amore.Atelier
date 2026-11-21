@@ -98,7 +98,7 @@
         <button data-site-lang="en" class="is-active">EN</button>
       </div>
       <a class="aa-btn-pill" id="aa-nav-cta" data-if="showNavCta" target="_blank" rel="noopener">
-        <span class="aa-dot"></span><span data-t="cotizar">Get a quote</span>
+        <span data-t="cotizar">Get a quote</span>
       </a>
     </nav>
   </header>
@@ -107,24 +107,26 @@
 
   <!-- ===================== HOME ===================== -->
   <section class="aa-page" data-page="inicio">
-    <div class="aa-hero">
+    <div class="aa-hero aa-hero--video">
       <div class="aa-hero-copy">
         <span class="aa-hero-loc script" data-t="heroLoc">Los Cabos, B.C.S.</span>
         <span class="aa-hero-rule" data-hline></span>
         <h1 class="aa-hero-title"><span data-t="heroTitleA">The printed art</span><br><em data-t="heroTitleB">of the 'I do'</em></h1>
         <p class="aa-hero-sub" data-t="heroSub">Hand-crafted welcome signs, seating charts and day-of stationery — bespoke pieces made in our Los Cabos studio for destination weddings that don't feel off-the-shelf.</p>
-        <div class="aa-hero-ctas">
-          <a class="aa-btn-solid-lg" id="aa-hero-cta1" data-if="showHeroCta1" target="_blank" rel="noopener" data-t="heroCta1">Request a quote</a>
-          <button class="aa-btn-outline aa-hidden" id="aa-hero-cta2" data-if="showHeroCta2" data-go="portafolio" data-t="heroCta2">View portfolio</button>
-        </div>
       </div>
-      <div class="aa-hero-media">
-        <div id="aa-heroimg"></div>
+      <div class="aa-hero-media" aria-hidden="true">
+        <video class="aa-hero-video" id="aa-hero-video" autoplay muted loop playsinline preload="auto" poster="../assets/hero-poster.jpg">
+          <source src="../assets/hero-video.webm" type="video/webm">
+          <source src="../assets/hero-video.mp4" type="video/mp4">
+        </video>
+        <div class="aa-hero-veil"></div>
       </div>
     </div>
 
+    <div class="aa-marquee" id="aa-marquee" aria-hidden="true"><div class="aa-marquee-track"><span>Welcome signs</span><b>&#10022;</b><span>Seating charts</span><b>&#10022;</b><span>Day-of stationery</span><b>&#10022;</b><span>Event signage</span><b>&#10022;</b><span>Handcrafted in Los Cabos</span><b>&#10022;</b><span>Welcome signs</span><b>&#10022;</b><span>Seating charts</span><b>&#10022;</b><span>Day-of stationery</span><b>&#10022;</b><span>Event signage</span><b>&#10022;</b><span>Handcrafted in Los Cabos</span><b>&#10022;</b></div></div>
+
     <div class="aa-manifesto">
-      <img src="../assets/wordmark.jpeg" alt="Amore Atelier" data-reveal>
+      <img src="../assets/wordmark-transparent.png" alt="Amore Atelier" data-reveal>
       <p data-reveal data-t="manifesto">Every wedding has a voice. Our job is to print it by hand — on the paper, in the ink, and in every detail your guests receive.</p>
     </div>
 
@@ -383,7 +385,7 @@
 
 </div>
 
-<script>window.AA_SITE_LANG = 'en'; window.AA_ASSET_BASE = '../'; window.AA_ADMIN_BASE = '../admin/';</script>
+<script>window.AA_SITE_LANG = 'en'; window.AA_ASSET_BASE = '../'; window.AA_LANG_BASE = './'; window.AA_SITE_BASE = '../'; window.AA_ADMIN_BASE = '../admin/'; window.AA_ALT_LANG_URL = '../';</script>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js" defer></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js" defer></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js" defer></script>

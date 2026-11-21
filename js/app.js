@@ -196,12 +196,32 @@
     const h = (location.hash || '').replace(/^#\/?/, '');
     return ROUTES.includes(h) ? h : (window.AA_DEFAULT_PAGE || 'inicio');
   }
+  function urlForPage(page) {
+    if (page === 'admin') return window.AA_ADMIN_BASE || '../admin/';
+    const langBase = window.AA_LANG_BASE != null ? window.AA_LANG_BASE : '';
+    const map = window.AA_SITE_LANG === 'en'
+      ? { inicio: '', nosotros: 'about/', servicios: 'services/', contacto: 'contact/' }
+      : { inicio: '', nosotros: 'nosotros/', servicios: 'servicios/', contacto: 'contacto/' };
+    if (page in map) return langBase + map[page];
+    return null;
+  }
   function redirectForMissingPage(page) {
-    location.href = page === 'admin'
-      ? (window.AA_ADMIN_BASE || '../admin/')
-      : (window.AA_SITE_BASE || '../') + '#/' + page;
+    const u = urlForPage(page);
+    if (u != null) { location.href = u; return; }
+    location.href = (window.AA_SITE_BASE || '../') + '#/' + page;
   }
   function goTo(page) {
+    if (location.protocol !== 'file:') {
+      const u = urlForPage(page);
+      if (u != null && page !== state.page) {
+        location.href = u;
+        return;
+      }
+      if (u != null && page === state.page) {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+    }
     if (!document.querySelector('.aa-page[data-page="' + page + '"]')) {
       redirectForMissingPage(page);
       return;
@@ -227,6 +247,21 @@
     syncPage();
     updateSeo();
     window.scrollTo({ top: 0, behavior: 'auto' });
+    syncHeroVideo();
+    onScroll();
+  }
+  /* Reproduce el video de portada solo cuando Inicio está visible */
+  function syncHeroVideo() {
+    const v = document.getElementById('aa-hero-video');
+    if (!v) return;
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (state.page === 'inicio' && !reduce) {
+      v.muted = true;
+      const pr = v.play();
+      if (pr && pr.catch) pr.catch(() => {});
+    } else {
+      v.pause();
+    }
   }
 
   /* ---------------- lightweight DOM syncs ---------------- */
@@ -576,12 +611,16 @@
   }
 
   function renderStaticImageSlots() {
+    // La portada ahora es un video (#aa-hero-video); la foto 'aa-hero' solo se
+    // monta si existe el contenedor antiguo #aa-heroimg.
     const heroWrap = document.getElementById('aa-heroimg');
-    if (!heroWrap) return; // this document has no public pages (e.g. the admin editor)
-    clearSlots(heroWrap);
-    heroWrap.appendChild(window.AACreateImageSlot('aa-hero', { placeholder: t().heroPh, className: 'aa-hero-photo', eager: true }));
+    if (heroWrap) {
+      clearSlots(heroWrap);
+      heroWrap.appendChild(window.AACreateImageSlot('aa-hero', { placeholder: t().heroPh, className: 'aa-hero-photo', eager: true }));
+    }
 
     const about1Wrap = document.getElementById('aa-about1-slot');
+    if (!about1Wrap) return; // this document has no public pages (e.g. the admin editor)
     clearSlots(about1Wrap);
     about1Wrap.appendChild(window.AACreateImageSlot('aa-about1', { placeholder: 'Foto de la pareja', className: 'aa-about-photo' }));
 
@@ -624,6 +663,10 @@
     if (nav) nav.classList.toggle('is-scrolled', y > 30);
     const hero = document.getElementById('aa-heroimg');
     if (hero && state.page === 'inicio') hero.style.transform = 'translateY(' + (y * 0.12) + 'px)';
+    // Navbar transparente solo arriba del todo, sobre el video de portada
+    const heroVideo = document.getElementById('aa-hero-video');
+    if (nav) nav.classList.toggle('is-over-hero', !!heroVideo && state.page === 'inicio' && y <= 30);
+    if (heroVideo && state.page === 'inicio') heroVideo.style.transform = 'translateY(' + (y * 0.25) + 'px) scale(1.04)';
   }
 
   /* ---------------- lang / content actions ---------------- */
@@ -662,6 +705,7 @@
   }
   function goToLangSite(l) {
     if (l === window.AA_SITE_LANG) return;
+    if (window.AA_ALT_LANG_URL) { location.href = window.AA_ALT_LANG_URL; return; }
     const target = l === 'en' ? 'en/' : '../';
     location.href = target + location.hash;
   }
@@ -697,6 +741,12 @@
     document.addEventListener('click', (e) => {
       const goBtn = e.target.closest('[data-go]');
       if (goBtn) { goTo(goBtn.getAttribute('data-go')); closeMobileNav(); return; }
+      const nextBtn = e.target.closest('[data-scroll-next]');
+      if (nextBtn) {
+        const hero = nextBtn.closest('.aa-hero');
+        if (hero) window.scrollTo({ top: hero.offsetHeight - 60, behavior: 'smooth' });
+        return;
+      }
       const siteLangBtn = e.target.closest('[data-site-lang]');
       if (siteLangBtn) { goToLangSite(siteLangBtn.getAttribute('data-site-lang')); return; }
       const langBtn = e.target.closest('[data-lang]');
