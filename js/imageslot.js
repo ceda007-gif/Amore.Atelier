@@ -95,30 +95,49 @@
 
   /* ---------------- shared lightbox ---------------- */
   let lightboxEl = null;
+  let lastFocusedEl = null;
   function ensureLightbox() {
     if (lightboxEl) return lightboxEl;
     lightboxEl = document.createElement('div');
     lightboxEl.className = 'aa-lightbox';
+    lightboxEl.setAttribute('role', 'dialog');
+    lightboxEl.setAttribute('aria-modal', 'true');
+    lightboxEl.setAttribute('aria-label', 'Vista ampliada de imagen');
     lightboxEl.innerHTML = '<button type="button" class="aa-lightbox-close" aria-label="Cerrar">&times;</button><img alt="">';
     lightboxEl.addEventListener('click', (e) => {
       if (e.target === lightboxEl || e.target.closest('.aa-lightbox-close')) closeLightbox();
     });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+    document.addEventListener('keydown', (e) => {
+      if (!lightboxEl || !lightboxEl.classList.contains('is-open')) return;
+      if (e.key === 'Escape') { closeLightbox(); return; }
+      if (e.key === 'Tab') {
+        e.preventDefault();
+        const closeBtn = lightboxEl.querySelector('.aa-lightbox-close');
+        if (closeBtn) closeBtn.focus();
+      }
+    });
     document.body.appendChild(lightboxEl);
     return lightboxEl;
   }
   function openLightbox(src, alt) {
+    lastFocusedEl = document.activeElement;
     const el = ensureLightbox();
     const img = el.querySelector('img');
     img.src = src;
     img.alt = alt || '';
     el.classList.add('is-open');
     document.body.style.overflow = 'hidden';
+    const closeBtn = el.querySelector('.aa-lightbox-close');
+    if (closeBtn) closeBtn.focus();
   }
   function closeLightbox() {
-    if (!lightboxEl) return;
+    if (!lightboxEl || !lightboxEl.classList.contains('is-open')) return;
     lightboxEl.classList.remove('is-open');
     document.body.style.overflow = '';
+    if (lastFocusedEl && typeof lastFocusedEl.focus === 'function' && document.contains(lastFocusedEl)) {
+      lastFocusedEl.focus();
+    }
+    lastFocusedEl = null;
   }
 
   /**
@@ -156,7 +175,7 @@
         img.style.display = 'block';
         placeholder.style.display = 'none';
         el.classList.add('has-image');
-        el.setAttribute('aria-label', 'Ver imagen completa');
+        el.setAttribute('aria-label', opts.placeholder ? 'Ampliar: ' + opts.placeholder : 'Ver imagen completa');
       } else {
         img.style.display = 'none';
         placeholder.style.display = 'flex';

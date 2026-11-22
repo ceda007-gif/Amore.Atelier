@@ -16,13 +16,19 @@ window.AA_I18N = {
     gtags: ['Bienvenida', 'Seating', 'Menú', 'Bienvenida', 'Señalética', 'Place cards', 'Seating', 'Bienvenida', 'Minuta'],
     tags: [['Acrílico', 'Espejo', 'Caligrafía', 'Gran formato'], ['Por mesa', 'Alfabético', 'Impreso', 'Montaje'], ['Menús', 'Minutas', 'Place cards', 'Números'], ['Direccionales', 'Programa', 'Bar', 'Detalles']],
     seoBrand: 'Amore Atelier',
-    seoDesc: 'Piezas hechas a mano para que tu boda en Los Cabos se sienta tuya: letreros de bienvenida, seating charts y menús a medida, con entrega e instalación en tu venue. Cotiza por WhatsApp.',
+    seoDesc: 'Piezas hechas a mano para tu boda en Los Cabos: letreros de bienvenida, seating charts y menús a medida, con entrega e instalación en tu venue.',
+    seoDescs: {
+      inicio: 'Piezas hechas a mano para tu boda en Los Cabos: letreros de bienvenida, seating charts y menús a medida, con entrega e instalación en tu venue.',
+      nosotros: 'Conoce a Dariana y Aldo, fundadores de Amore Atelier en Los Cabos. Diseñamos papelería de boda y señalética a medida con atención personalizada.',
+      servicios: 'Letreros de bienvenida en acrílico y espejo, seating charts, menús, minutas y señalética de boda en Los Cabos con entrega e instalación en tu venue.',
+      contacto: 'Solicita tu cotización por WhatsApp para letreros de bienvenida, seating charts y papelería de boda en Los Cabos, San José del Cabo y Baja California Sur.'
+    },
     seoTitles: {
-      inicio: 'Señalética y papelería para bodas en Los Cabos — letreros, seating charts y menús a medida',
-      nosotros: 'Nosotros · Estudio de papelería de bodas en Los Cabos',
-      servicios: 'Servicios: letreros, seating charts y papelería de boda · Los Cabos',
-      portafolio: 'Portafolio de bodas en Los Cabos',
-      contacto: 'Contacto y cotizaciones · Bodas en Los Cabos',
+      inicio: 'Papelería y Señalética de Bodas Los Cabos',
+      nosotros: 'Nosotros · Papelería de Bodas Los Cabos',
+      servicios: 'Letreros, Seating Charts y Menús Los Cabos',
+      portafolio: 'Portafolio de Bodas en Los Cabos',
+      contacto: 'Cotiza tu Papelería de Boda · Los Cabos',
       admin: 'Panel de edición'
     },
     waPrefill: 'Hola Amore Atelier 👋 Me gustaría cotizar la papelería de mi boda.',
@@ -42,13 +48,19 @@ window.AA_I18N = {
     gtags: ['Welcome', 'Seating', 'Menu', 'Welcome', 'Signage', 'Place cards', 'Seating', 'Welcome', 'Program'],
     tags: [['Acrylic', 'Mirror', 'Calligraphy', 'Large format'], ['By table', 'Alphabetical', 'Printed', 'Display'], ['Menus', 'Programs', 'Place cards', 'Numbers'], ['Directional', 'Program', 'Bar', 'Details']],
     seoBrand: 'Amore Atelier',
-    seoDesc: 'Hand-crafted pieces that make your Los Cabos wedding feel like yours — custom welcome signs, seating charts and day-of stationery, delivered and installed at your venue. Get a quote on WhatsApp.',
+    seoDesc: 'Hand-crafted wedding signage & stationery in Los Cabos: custom welcome signs, seating charts and menus, delivered and installed at your venue.',
+    seoDescs: {
+      inicio: 'Hand-crafted wedding signage & stationery in Los Cabos: custom welcome signs, seating charts and menus, delivered and installed at your venue.',
+      nosotros: 'Meet Dariana and Aldo, founders of Amore Atelier in Los Cabos. Bespoke wedding signage and day-of stationery crafted for destination weddings.',
+      servicios: 'Custom wedding signage and stationery in Los Cabos: acrylic and mirror welcome signs, seating charts, menus, place cards and on-site venue installation.',
+      contacto: 'Request a quote on WhatsApp for custom welcome signs, seating charts and day-of wedding stationery in Los Cabos and Baja California Sur.'
+    },
     seoTitles: {
-      inicio: 'Wedding Signage & Stationery in Los Cabos — Welcome Signs, Seating Charts & Menus',
-      nosotros: 'About us · Wedding stationery studio in Los Cabos',
-      servicios: 'Services: welcome signs, seating charts & stationery · Los Cabos',
-      portafolio: 'Wedding portfolio in Los Cabos',
-      contacto: 'Contact & quotes · Weddings in Los Cabos',
+      inicio: 'Wedding Signage & Stationery Los Cabos',
+      nosotros: 'About Us · Los Cabos Wedding Stationery',
+      servicios: 'Welcome Signs, Seating Charts & Menus Cabo',
+      portafolio: 'Los Cabos Wedding Portfolio',
+      contacto: 'Get a Quote · Los Cabos Wedding Stationery',
       admin: 'Edit panel'
     },
     waPrefill: 'Hi Amore Atelier 👋 I would like a quote for my wedding stationery.',

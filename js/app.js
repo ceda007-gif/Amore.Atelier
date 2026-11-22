@@ -250,12 +250,13 @@
     syncHeroVideo();
     onScroll();
   }
-  /* Reproduce el video de portada solo cuando Inicio está visible */
+  /* Reproduce el video de portada solo cuando Inicio está visible, la pestaña está activa y no hay ahorro de datos */
   function syncHeroVideo() {
     const v = document.getElementById('aa-hero-video');
     if (!v) return;
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (state.page === 'inicio' && !reduce) {
+    const saveData = !!(navigator.connection && navigator.connection.saveData);
+    if (state.page === 'inicio' && !reduce && !saveData && !document.hidden) {
       v.muted = true;
       const pr = v.play();
       if (pr && pr.catch) pr.catch(() => {});
@@ -319,15 +320,16 @@
   function updateSeo() {
     const T = t();
     const title = (T.seoTitles[state.page] || T.seoTitles.inicio) + ' | ' + T.seoBrand;
+    const desc = (T.seoDescs && T.seoDescs[state.page]) || T.seoDesc;
     document.title = title;
     document.documentElement.lang = state.lang;
     const setMeta = (sel, val) => { const m = document.querySelector(sel); if (m) m.setAttribute('content', val); };
-    setMeta('meta[name="description"]', T.seoDesc);
+    setMeta('meta[name="description"]', desc);
     setMeta('meta[property="og:title"]', title);
-    setMeta('meta[property="og:description"]', T.seoDesc);
+    setMeta('meta[property="og:description"]', desc);
     setMeta('meta[property="og:locale"]', state.lang === 'es' ? 'es_MX' : 'en_US');
     setMeta('meta[name="twitter:title"]', title);
-    setMeta('meta[name="twitter:description"]', T.seoDesc);
+    setMeta('meta[name="twitter:description"]', desc);
   }
 
   /* ---------------- dynamic list builders ---------------- */
@@ -345,9 +347,12 @@
     // Home services grid — text only; the photos live on the Servicios
     // page so the home page doesn't have to load them at all.
     grid.innerHTML = '';
+    const svcHref = urlForPage('servicios') || '#/servicios';
     C.services.forEach((svc, i) => {
-      const card = document.createElement('button');
+      const card = document.createElement('a');
       card.className = 'aa-svc-card aa-svc-card-textonly';
+      card.href = svcHref;
+      card.setAttribute('data-go', 'servicios');
       card.setAttribute('data-reveal', '');
       const body = document.createElement('div');
       body.className = 'aa-svc-body';
@@ -357,7 +362,6 @@
       body.querySelector('h3').textContent = svc.title;
       body.querySelector('p').textContent = svc.short;
       card.appendChild(body);
-      card.addEventListener('click', () => goTo('servicios'));
       grid.appendChild(card);
     });
 
@@ -718,14 +722,19 @@
   }
 
   /* ---------------- mobile nav ---------------- */
-  function closeMobileNav() {
+  function closeMobileNav(returnFocus) {
+    const nav = document.getElementById('aa-nav');
     const toggle = document.getElementById('aa-nav-toggle');
     const links = document.getElementById('aa-navlinks');
     if (!toggle || !links) return;
+    const wasOpen = links.classList.contains('is-open');
     toggle.setAttribute('aria-expanded', 'false');
     links.classList.remove('is-open');
+    if (nav) nav.classList.remove('is-menu-open');
+    if (returnFocus && wasOpen) toggle.focus();
   }
   function bindMobileNav() {
+    const nav = document.getElementById('aa-nav');
     const toggle = document.getElementById('aa-nav-toggle');
     const links = document.getElementById('aa-navlinks');
     if (!toggle || !links) return; // no hamburger nav on this document (e.g. the admin editor)
@@ -733,14 +742,30 @@
       const open = toggle.getAttribute('aria-expanded') === 'true';
       toggle.setAttribute('aria-expanded', String(!open));
       links.classList.toggle('is-open', !open);
+      if (nav) nav.classList.toggle('is-menu-open', !open);
     });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && links.classList.contains('is-open')) closeMobileNav(true);
+    });
+    document.addEventListener('click', (e) => {
+      if (links.classList.contains('is-open') && nav && !nav.contains(e.target)) closeMobileNav(false);
+    });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 860 && links.classList.contains('is-open')) closeMobileNav(false);
+    }, { passive: true });
   }
 
   /* ---------------- init ---------------- */
   function bindStaticEvents() {
     document.addEventListener('click', (e) => {
       const goBtn = e.target.closest('[data-go]');
-      if (goBtn) { goTo(goBtn.getAttribute('data-go')); closeMobileNav(); return; }
+      if (goBtn) {
+        if (goBtn.tagName === 'A' && (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button === 1)) return;
+        if (goBtn.tagName === 'A') e.preventDefault();
+        goTo(goBtn.getAttribute('data-go'));
+        closeMobileNav(false);
+        return;
+      }
       const nextBtn = e.target.closest('[data-scroll-next]');
       if (nextBtn) {
         const hero = nextBtn.closest('.aa-hero');
@@ -751,6 +776,16 @@
       if (siteLangBtn) { goToLangSite(siteLangBtn.getAttribute('data-site-lang')); return; }
       const langBtn = e.target.closest('[data-lang]');
       if (langBtn) { setLang(langBtn.getAttribute('data-lang')); return; }
+      const faqBtn = e.target.closest('[data-faq-btn]');
+      if (faqBtn) {
+        const item = faqBtn.closest('.aa-faq-item');
+        if (item) {
+          const open = !item.classList.contains('is-open');
+          item.classList.toggle('is-open', open);
+          faqBtn.setAttribute('aria-expanded', String(open));
+        }
+        return;
+      }
     });
     bindMobileNav();
     syncSiteLangButtons();
@@ -775,6 +810,7 @@
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('hashchange', applyRoute);
+    document.addEventListener('visibilitychange', syncHeroVideo);
   }
 
   function init() {
