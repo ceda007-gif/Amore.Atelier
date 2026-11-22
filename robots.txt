@@ -1,7 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
-Disallow: /project/
-Disallow: /chats/
 
 Sitemap: https://amoreatelierdesign.com/sitemap.xml

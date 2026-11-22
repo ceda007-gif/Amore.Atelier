@@ -2,18 +2,17 @@
 
 > Bespoke wedding signage and day-of stationery studio in Los Cabos, Baja California Sur, Mexico. Founded by Dariana & Aldo.
 
-Amore Atelier designs, hand-crafts, and installs custom wedding signage and day-of stationery for destination weddings and wedding planners across Los Cabos and Baja California Sur.
+Amore Atelier designs, hand-crafts, and installs custom wedding signage and day-of stationery for destination weddings and wedding planners in Los Cabos and La Paz.
 
 ## Services
-- **Welcome Signs (Letreros de bienvenida):** Large-format custom signs in acrylic, mirror, wood, fabric/linen, and fine paper with hand-painted details and calligraphy.
+- **Welcome Signs (Letreros de bienvenida):** Large-format custom signs in acrylic, mirror, wood, fabric/linen, and fine paper with calligraphic typography and custom finishes.
 - **Seating Charts:** Custom table charts (by table, alphabetical, or family) with on-site delivery and setup.
-- **Day-of Stationery (Papelería de mesa):** Coordinated menus, ceremony programs, place cards, and table numbers.
+- **Day-of Stationery (Papelería de mesa):** Coordinated menus, ceremony programs, place cards, table numbers, and vow books.
 - **Event Signage (Señalética de evento):** Directional signs, bar menus, timeline boards, and custom event details installed at the venue.
 
 ## Service Area
-- Los Cabos (Cabo San Lucas, San José del Cabo, Los Cabos Corridor, East Cape)
-- Todos Santos & Pescadero
-- La Paz & Baja California Sur, Mexico
+- Los Cabos (Cabo San Lucas & San José del Cabo), Baja California Sur, Mexico
+- La Paz, Baja California Sur, Mexico
 
 ## Languages
 - Spanish (`es`): https://amoreatelierdesign.com/
@@ -23,10 +22,12 @@ Amore Atelier designs, hand-crafts, and installs custom wedding signage and day-
 - Home (ES): https://amoreatelierdesign.com/
 - About (ES): https://amoreatelierdesign.com/nosotros/
 - Services (ES): https://amoreatelierdesign.com/servicios/
+- Portfolio (ES): https://amoreatelierdesign.com/portafolio/
 - Contact (ES): https://amoreatelierdesign.com/contacto/
 - Home (EN): https://amoreatelierdesign.com/en/
 - About (EN): https://amoreatelierdesign.com/en/about/
 - Services (EN): https://amoreatelierdesign.com/en/services/
+- Portfolio (EN): https://amoreatelierdesign.com/en/portfolio/
 - Contact (EN): https://amoreatelierdesign.com/en/contact/
 
 ## Contact

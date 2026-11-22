@@ -219,13 +219,25 @@ a{color:inherit}
    Portafolio
    ============================================================ */
 .aa-filters{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;padding:0 clamp(24px,6vw,64px) clamp(36px,5vw,56px)}
-.aa-filter-btn{background:none;border:1px solid rgba(115,1,33,.22);cursor:pointer;font-family:'Jost';font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);padding:10px 20px;border-radius:999px;transition:all .3s ease}
-.aa-filter-btn.is-active{background:var(--burg);color:var(--bg);border-color:var(--burg)}
-.aa-gallery{columns:3 300px;column-gap:clamp(14px,2vw,22px);padding:0 clamp(24px,6vw,64px) clamp(70px,9vw,110px)}
-.aa-gallery-item{break-inside:avoid;margin-bottom:clamp(14px,2vw,22px);position:relative;overflow:hidden;border-radius:3px}
+.aa-filter-btn{background:none;border:1px solid rgba(115,1,33,.22);cursor:pointer;font-family:'Jost';font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);padding:10px 20px;border-radius:0;transition:all .35s var(--ease)}
+.aa-filter-btn:hover{border-color:var(--burg)}
+.aa-filter-btn.is-active{background:var(--burg);color:var(--ivory);border-color:var(--burg)}
+.aa-gallery{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(22px,2.8vw,36px);align-items:start;
+  max-width:1360px;margin:0 auto;padding:0 clamp(24px,6vw,64px) clamp(70px,9vw,110px);
+}
+.aa-gallery-item{margin:0;display:flex;flex-direction:column}
 .aa-gallery-item.is-hidden{display:none}
-.aa-gallery-photo{width:100%;display:block;height:100%}
-.aa-gallery-tag{position:absolute;left:14px;bottom:12px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--bg);background:rgba(82,0,26,.55);backdrop-filter:blur(3px);padding:5px 11px;border-radius:999px}
+.aa-gallery-frame{position:relative;overflow:hidden;width:100%;background:var(--cream2)}
+.aa-gallery-photo{width:100%;height:100%;display:block}
+.aa-gallery-photo img{transition:transform 1.1s var(--ease)}
+.aa-gallery-item:hover .aa-gallery-photo img{transform:scale(1.04)}
+.aa-gallery-tag{position:absolute;left:14px;bottom:14px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ivory);background:rgba(42,4,14,.72);backdrop-filter:blur(4px);padding:6px 12px;pointer-events:none}
+.aa-gallery-cap{padding:14px 2px 4px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:4px}
+.aa-gallery-title{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:22px;line-height:1.2;color:var(--burg)}
+.aa-gallery-event{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-text)}
+@media(max-width:960px){.aa-gallery{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.aa-gallery{grid-template-columns:1fr}}
 
 /* ============================================================
    Contacto
@@ -456,12 +468,12 @@ body{font-weight:300;letter-spacing:.005em}
 .aa-langswitch{border:none !important;border-radius:0;gap:6px;overflow:visible}
 .aa-langswitch button{
   background:transparent !important;border:none;padding:4px 2px;
-  font-size:12px;letter-spacing:.2em;font-weight:400;color:var(--ink);opacity:.5;
-  transition:opacity .3s var(--ease),color .3s var(--ease);
+  font-size:12px;letter-spacing:.2em;font-weight:400;color:var(--ink);opacity:.74;
+  transition:opacity .2s var(--ease),color .2s var(--ease);
 }
 .aa-langswitch button + button::before{content:"/";margin-right:8px;opacity:.45;font-weight:300}
-.aa-langswitch button:hover{opacity:.85}
-.aa-langswitch button.is-active{background:transparent !important;color:var(--burg);opacity:1;font-weight:500}
+.aa-langswitch button:hover{opacity:1}
+.aa-langswitch button.is-active{background:transparent !important;color:var(--burg);opacity:1;font-weight:600}
 
 .aa-btn-pill{
   background:transparent !important;border:none !important;border-radius:0;
@@ -480,10 +492,10 @@ body{font-weight:300;letter-spacing:.005em}
   #aa-nav.is-over-hero{background:transparent;backdrop-filter:none;border-bottom-color:rgba(251,246,238,.18);box-shadow:none}
   #aa-nav.is-over-hero .aa-brand span,
   #aa-nav.is-over-hero .aa-navlink,
-  #aa-nav.is-over-hero .aa-btn-pill{color:var(--ivory)}
+  #aa-nav.is-over-hero .aa-btn-pill{color:var(--ivory);text-shadow:0 1px 8px rgba(20,2,6,.4)}
   #aa-nav.is-over-hero .aa-navlink.is-active{color:var(--ivory)}
-  #aa-nav.is-over-hero .aa-langswitch button{color:var(--ivory)}
-  #aa-nav.is-over-hero .aa-langswitch button.is-active{color:var(--ivory)}
+  #aa-nav.is-over-hero .aa-langswitch button{color:var(--ivory);opacity:.82;text-shadow:0 1px 8px rgba(20,2,6,.4)}
+  #aa-nav.is-over-hero .aa-langswitch button.is-active{color:var(--ivory);opacity:1}
 }
 @media(max-width:860px){
   #aa-nav.is-over-hero:not(.is-menu-open){background:transparent;backdrop-filter:none;border-bottom-color:transparent}
@@ -705,4 +717,71 @@ body{font-weight:300;letter-spacing:.005em}
 
 @media(max-width:860px), (orientation:portrait) and (max-width:1024px){
   .aa-hero-video{transform:none;object-position:center center}
+}
+
+/* ============================================================
+   PASO 2 — Transición Manifesto, Obra seleccionada & Testimonio
+   ============================================================ */
+.aa-manifesto{border-top:1px solid rgba(217,194,154,.28)}
+
+.aa-featured{
+  max-width:1320px;margin:0 auto;
+  padding:clamp(76px,9.5vw,124px) clamp(24px,6vw,64px) clamp(64px,8vw,104px);
+}
+.aa-featured-grid{
+  display:grid;grid-template-columns:repeat(12,1fr);
+  gap:clamp(24px,3vw,42px);align-items:start;
+}
+.aa-featured-item{margin:0;display:flex;flex-direction:column}
+.aa-featured-item--lead{grid-column:1 / span 5}
+.aa-featured-item--mid{grid-column:6 / span 4;margin-top:clamp(40px,5.5vw,84px)}
+.aa-featured-item--detail{grid-column:10 / span 3}
+.aa-featured-frame{
+  position:relative;overflow:hidden;width:100%;aspect-ratio:3 / 4;
+  background:var(--cream2);
+}
+.aa-featured-photo{width:100%;height:100%;display:block}
+.aa-featured-photo img{transition:transform 1.1s var(--ease)}
+.aa-featured-item:hover .aa-featured-photo img{transform:scale(1.03)}
+.aa-featured-cap{
+  padding:16px 0 6px;border-bottom:1px solid var(--line);
+  display:flex;flex-direction:column;gap:4px;
+}
+.aa-featured-event{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-text)}
+.aa-featured-title{font-family:'Cormorant Garamond',serif;font-weight:400;font-size:clamp(20px,1.9vw,24px);line-height:1.25;color:var(--burg)}
+
+.aa-services-section{border-top:1px solid var(--line);padding-top:clamp(64px,8vw,108px)}
+.aa-testimonial{border-top:1px solid var(--line);background:var(--cream2)}
+
+@media(max-width:860px){
+  .aa-featured-grid{grid-template-columns:1fr;gap:40px}
+  .aa-featured-item--lead,.aa-featured-item--mid,.aa-featured-item--detail{grid-column:auto;margin-top:0}
+  .aa-featured-frame{aspect-ratio:3 / 4}
+}
+
+/* ============================================================
+   PASO 3 — Cierre editorial, Servicios CTA, Portafolio & Móvil
+   ============================================================ */
+#aa-featured,#aa-faq{scroll-margin-top:84px}
+
+.aa-closing{
+  padding:clamp(56px,7vw,88px) clamp(24px,6vw,64px);
+  text-align:center;border-top:1px solid var(--line);background:var(--cream2);
+}
+.aa-closing .aa-eyebrow::after{content:"";width:28px;height:1px;background:currentColor;opacity:.8}
+.aa-closing h2{
+  font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(32px,4.4vw,54px);
+  color:var(--burg);margin:16px auto 0;line-height:1.1;max-width:720px;
+}
+.aa-closing p{max-width:520px;margin:18px auto 0;font-size:16px;line-height:1.75;color:var(--ink);opacity:.82}
+.aa-closing-actions{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:22px;margin-top:34px}
+.aa-closing-actions .aa-link-underline{color:var(--burg);text-decoration:none}
+
+.aa-svc-cta-link{display:inline-block;margin-top:26px;color:var(--burg);text-decoration:none}
+
+@media(max-width:860px){
+  .aa-filters{padding-bottom:28px;gap:8px}
+  .aa-filter-btn{padding:9px 14px;font-size:11px}
+  .aa-svc-row{gap:28px;padding:36px 24px}
+  .aa-svc-cta-link{margin-top:20px}
 }
