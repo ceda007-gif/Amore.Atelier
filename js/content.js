@@ -7,52 +7,72 @@ window.AA_I18N = {
     cotizar: 'Cotizar', heroCta1: 'Solicitar cotización', heroCta2: 'Ver portafolio', verTodo: 'Ver todo →',
     ctaWhatsapp: 'Escríbenos por WhatsApp', ebNosotros: 'Nosotros', ebServicios: 'Servicios', ebPortafolio: 'Portafolio', ebContacto: 'Contacto',
     waLabel: 'WhatsApp', fNombre: 'Nombre', fNombrePh: 'Tu nombre', fFecha: 'Fecha de la boda', fFechaPh: 'Ej. 14 de febrero, 2027',
+    fVenue: 'Venue o zona del evento (opcional)', fVenuePh: 'Ej. Hotel, jardín o ciudad',
     fServicio: 'Servicio de interés', fMensaje: 'Mensaje', fMensajePh: 'Cuéntanos tu idea…', fEnviar: 'Enviar por WhatsApp',
+    svcCtaLink: 'Solicitar propuesta →',
+    svcWaMsg: (title) => `Hola Amore Atelier 👋 Me gustaría solicitar una propuesta para ${title}.`,
     lEstudio: 'Estudio', lCobertura: 'Cobertura', footNav: 'Navegación', footContacto: 'Contacto', footEditar: 'Editar sitio',
     copyright: '© 2026 Amore Atelier · Hecho con amor en Los Cabos',
     heroPh: 'Foto principal — un letrero de bienvenida', galPh: 'Foto de portafolio ',
     selectOpts: ['Letreros de bienvenida', 'Seating chart', 'Papelería de mesa', 'Señalética del evento', 'Todo lo anterior'],
     filters: { todos: 'Todos', letreros: 'Letreros', seating: 'Seating', papeleria: 'Papelería', senaletica: 'Señalética' },
     gtags: ['Bienvenida', 'Seating', 'Menú', 'Bienvenida', 'Señalética', 'Place cards', 'Seating', 'Bienvenida', 'Minuta'],
-    tags: [['Acrílico', 'Espejo', 'Caligrafía', 'Gran formato'], ['Por mesa', 'Alfabético', 'Impreso', 'Montaje'], ['Menús', 'Minutas', 'Place cards', 'Números'], ['Direccionales', 'Programa', 'Bar', 'Detalles']],
+    tags: [['Acrílico', 'Espejo', 'Tipografía caligráfica', 'Gran formato'], ['Por mesa', 'Alfabético', 'Impreso', 'Montaje'], ['Menús', 'Minutas', 'Place cards', 'Números'], ['Direccionales', 'Programa', 'Bar', 'Detalles']],
     seoBrand: 'Amore Atelier',
-    seoDesc: 'Piezas hechas a mano para que tu boda en Los Cabos se sienta tuya: letreros de bienvenida, seating charts y menús a medida, con entrega e instalación en tu venue. Cotiza por WhatsApp.',
+    seoDesc: 'Piezas hechas a mano para tu boda en Los Cabos: letreros de bienvenida, seating charts y menús a medida, con entrega e instalación en tu venue.',
+    seoDescs: {
+      inicio: 'Piezas hechas a mano para tu boda en Los Cabos: letreros de bienvenida, seating charts y menús a medida, con entrega e instalación en tu venue.',
+      nosotros: 'Conoce a Dariana y Aldo, fundadores de Amore Atelier en Los Cabos. Diseñamos papelería de boda y señalética a medida con atención personalizada.',
+      servicios: 'Letreros de bienvenida en acrílico y espejo, seating charts, menús, minutas y señalética de boda en Los Cabos con entrega e instalación en tu venue.',
+      portafolio: 'Explora letreros de bienvenida, seating charts, menús y señalética real diseñada a mano por Amore Atelier para bodas en Los Cabos.',
+      contacto: 'Solicita tu cotización por WhatsApp para letreros de bienvenida, seating charts y papelería de boda en Los Cabos y La Paz.'
+    },
     seoTitles: {
-      inicio: 'Señalética y papelería para bodas en Los Cabos — letreros, seating charts y menús a medida',
-      nosotros: 'Nosotros · Estudio de papelería de bodas en Los Cabos',
-      servicios: 'Servicios: letreros, seating charts y papelería de boda · Los Cabos',
-      portafolio: 'Portafolio de bodas en Los Cabos',
-      contacto: 'Contacto y cotizaciones · Bodas en Los Cabos',
+      inicio: 'Papelería y Señalética de Bodas Los Cabos',
+      nosotros: 'Nosotros · Papelería de Bodas Los Cabos',
+      servicios: 'Letreros, Seating Charts y Menús Los Cabos',
+      portafolio: 'Portafolio de Bodas en Los Cabos',
+      contacto: 'Cotiza tu Papelería de Boda · Los Cabos',
       admin: 'Panel de edición'
     },
     waPrefill: 'Hola Amore Atelier 👋 Me gustaría cotizar la papelería de mi boda.',
-    formMsg: (f) => `Hola Amore Atelier 👋\n\nSoy ${f.nombre || '[nombre]'}.\nFecha de la boda: ${f.fecha || '[por definir]'}\nServicio: ${f.servicio}\n\n${f.mensaje || 'Me gustaría cotizar mi papelería.'}`
+    formMsg: (f) => `Hola Amore Atelier 👋\n\nSoy ${f.nombre || '[nombre]'}.\nFecha de la boda: ${f.fecha || '[por definir]'}${f.venue ? '\nVenue / zona: ' + f.venue : ''}\nServicio: ${f.servicio}\n\n${f.mensaje || 'Me gustaría cotizar mi papelería.'}`
   },
   en: {
     navInicio: 'Home', navNosotros: 'About', navServicios: 'Services', navPortafolio: 'Portfolio', navContacto: 'Contact',
     cotizar: 'Get a quote', heroCta1: 'Request a quote', heroCta2: 'View portfolio', verTodo: 'View all →',
     ctaWhatsapp: 'Message us on WhatsApp', ebNosotros: 'About us', ebServicios: 'Services', ebPortafolio: 'Portfolio', ebContacto: 'Contact',
     waLabel: 'WhatsApp', fNombre: 'Name', fNombrePh: 'Your name', fFecha: 'Wedding date', fFechaPh: 'e.g. February 14, 2027',
+    fVenue: 'Event venue or area (optional)', fVenuePh: 'e.g. Hotel, venue or city',
     fServicio: 'Service of interest', fMensaje: 'Message', fMensajePh: 'Tell us your idea…', fEnviar: 'Send via WhatsApp',
+    svcCtaLink: 'Request a proposal →',
+    svcWaMsg: (title) => `Hi Amore Atelier 👋 I would like to request a proposal for ${title}.`,
     lEstudio: 'Studio', lCobertura: 'Coverage', footNav: 'Navigation', footContacto: 'Contact', footEditar: 'Edit site',
     copyright: '© 2026 Amore Atelier · Made with love in Los Cabos',
     heroPh: 'Main photo — a welcome sign', galPh: 'Portfolio photo ',
     selectOpts: ['Welcome signs', 'Seating chart', 'Table stationery', 'Event signage', 'All of the above'],
     filters: { todos: 'All', letreros: 'Signs', seating: 'Seating', papeleria: 'Stationery', senaletica: 'Signage' },
     gtags: ['Welcome', 'Seating', 'Menu', 'Welcome', 'Signage', 'Place cards', 'Seating', 'Welcome', 'Program'],
-    tags: [['Acrylic', 'Mirror', 'Calligraphy', 'Large format'], ['By table', 'Alphabetical', 'Printed', 'Display'], ['Menus', 'Programs', 'Place cards', 'Numbers'], ['Directional', 'Program', 'Bar', 'Details']],
+    tags: [['Acrylic', 'Mirror', 'Calligraphic typography', 'Large format'], ['By table', 'Alphabetical', 'Printed', 'Display'], ['Menus', 'Programs', 'Place cards', 'Numbers'], ['Directional', 'Program', 'Bar', 'Details']],
     seoBrand: 'Amore Atelier',
-    seoDesc: 'Hand-crafted pieces that make your Los Cabos wedding feel like yours — custom welcome signs, seating charts and day-of stationery, delivered and installed at your venue. Get a quote on WhatsApp.',
+    seoDesc: 'Hand-crafted wedding signage & stationery in Los Cabos: custom welcome signs, seating charts and menus, delivered and installed at your venue.',
+    seoDescs: {
+      inicio: 'Hand-crafted wedding signage & stationery in Los Cabos: custom welcome signs, seating charts and menus, delivered and installed at your venue.',
+      nosotros: 'Meet Dariana and Aldo, founders of Amore Atelier in Los Cabos. Bespoke wedding signage and day-of stationery crafted for destination weddings.',
+      servicios: 'Custom wedding signage and stationery in Los Cabos: acrylic and mirror welcome signs, seating charts, menus, place cards and on-site venue installation.',
+      portafolio: 'Explore real hand-crafted welcome signs, seating charts, menus and event signage designed by Amore Atelier for Los Cabos weddings.',
+      contacto: 'Request a quote on WhatsApp for custom welcome signs, seating charts and day-of wedding stationery in Los Cabos and La Paz.'
+    },
     seoTitles: {
-      inicio: 'Wedding Signage & Stationery in Los Cabos — Welcome Signs, Seating Charts & Menus',
-      nosotros: 'About us · Wedding stationery studio in Los Cabos',
-      servicios: 'Services: welcome signs, seating charts & stationery · Los Cabos',
-      portafolio: 'Wedding portfolio in Los Cabos',
-      contacto: 'Contact & quotes · Weddings in Los Cabos',
+      inicio: 'Wedding Signage & Stationery Los Cabos',
+      nosotros: 'About Us · Los Cabos Wedding Stationery',
+      servicios: 'Welcome Signs, Seating Charts & Menus Cabo',
+      portafolio: 'Los Cabos Wedding Portfolio',
+      contacto: 'Get a Quote · Los Cabos Wedding Stationery',
       admin: 'Edit panel'
     },
     waPrefill: 'Hi Amore Atelier 👋 I would like a quote for my wedding stationery.',
-    formMsg: (f) => `Hi Amore Atelier 👋\n\nI'm ${f.nombre || '[name]'}.\nWedding date: ${f.fecha || '[TBD]'}\nService: ${f.servicio}\n\n${f.mensaje || "I'd like a quote for my stationery."}`
+    formMsg: (f) => `Hi Amore Atelier 👋\n\nI'm ${f.nombre || '[name]'}.\nWedding date: ${f.fecha || '[TBD]'}${f.venue ? '\nVenue / area: ' + f.venue : ''}\nService: ${f.servicio}\n\n${f.mensaje || "I'd like a quote for my stationery."}`
   }
 };
 
@@ -62,7 +82,9 @@ window.AA_DEFAULTS = {
     heroSub: 'Letreros de bienvenida, seating charts y papelería de mesa pintados y armados a mano en nuestro taller de Los Cabos — piezas hechas para bodas de destino que no se sienten genéricas.',
     manifesto: 'Cada boda tiene una voz. Nuestro trabajo es imprimirla a mano — en el papel, en la tinta y en cada detalle que reciben tus invitados.',
     servEyebrow: 'Lo que creamos', servTitle: 'Nuestros servicios', procEyebrow: 'Cómo trabajamos', procTitle: 'Un proceso sin prisas',
-    quoteScript: 'con todo el corazón', quoteText: '"Amore Atelier convirtió una idea en la boda que soñábamos. Cada letrero, cada menú, perfecto."', quoteAuthor: 'Ana & Diego — Hotel El Ganzo, Los Cabos',
+    closingEyebrow: 'Tu celebración', closingTitle: '¿Listos para diseñar las piezas de tu boda?',
+    closingText: 'Cuéntanos tu fecha, tu venue y lo que imaginas. Respondemos personalmente.',
+    closingWa: 'Solicitar propuesta por WhatsApp', closingContact: 'Ir a Contacto →',
     plannersEyebrow: 'Wedding planners', plannersTitle: 'Tu aliado logístico para cada boda',
     plannersText: 'Trabajamos codo a codo con planners: mockup de aprobación antes de producir, tiempos de producción claros, y entrega e instalación directo en el venue el día del evento. Sin sorpresas de última hora.',
     plannersCta: 'Coordinemos tu próxima boda',
@@ -75,12 +97,12 @@ window.AA_DEFAULTS = {
     svcPageTitle: 'Todo lo impreso de tu boda', svcPageIntro: 'Diseño a medida, papeles seleccionados y acabados cuidados. Cada pieza se coordina para que tu evento se sienta de una sola pieza.', svcCtaTitle: '¿Empezamos tu papelería?',
     portTitle: 'Bodas que hemos vestido',
     contactTitle: 'Hablemos de tu boda', contactIntro: 'Cuéntanos tu fecha y lo que imaginas. Respondemos personalmente, sin plantillas.',
-    estudioVal: 'Los Cabos, B.C.S.', coberturaVal: 'Toda Baja California Sur', formTitle: 'Solicita tu cotización',
+    estudioVal: 'Los Cabos, B.C.S.', coberturaVal: 'Los Cabos y La Paz', formTitle: 'Solicita tu cotización',
     footerDesc: "El arte impreso del 'Sí, acepto'. Papelería y señalética de boda a medida, desde Los Cabos.",
     services: [
-      { title: 'Letreros de bienvenida', short: 'La primera pieza que ven tus invitados al llegar.', long: 'Grandes formatos en acrílico, espejo, madera o papel, pintados y calibrados a mano en nuestro taller. El primer vistazo que anuncia el tono de tu celebración desde la entrada del venue.' },
+      { title: 'Letreros de bienvenida', short: 'La primera pieza que ven tus invitados al llegar.', long: 'Grandes formatos en acrílico, espejo, madera o papel, trabajados con tipografía caligráfica y acabados a medida en nuestro taller. El primer vistazo que anuncia el tono de tu celebración desde la entrada del venue.' },
       { title: 'Seating charts', short: 'Que cada invitado encuentre su lugar con estilo.', long: 'Planos de mesa claros y bellos: por mesa, alfabético o por familia, con instalación resuelta el día del evento para que no sea un pendiente tuyo.' },
-      { title: 'Papelería de mesa', short: 'Menús, minutas y place cards coordinados.', long: 'Menús, minutas, place cards y números de mesa: tu day-of stationery coordinada en un mismo lenguaje visual, lista para tu venue.' },
+      { title: 'Papelería de mesa', short: 'Menús, minutas y place cards coordinados.', long: 'Menús, minutas, place cards, números de mesa y libros de votos: tu day-of stationery coordinada en un mismo lenguaje visual, lista para tu venue.' },
       { title: 'Señalética del evento', short: 'Guía a tus invitados por cada momento.', long: 'Ceremonia, cóctel, cena y fiesta: señales, letreros direccionales y detalles instalados en sitio para que todo fluya sin una sola duda.' }
     ],
     steps: [
@@ -94,7 +116,9 @@ window.AA_DEFAULTS = {
     heroSub: 'Hand-crafted welcome signs, seating charts and day-of stationery — bespoke pieces made in our Los Cabos studio for destination weddings that don’t feel off-the-shelf.',
     manifesto: 'Every wedding has a voice. Our job is to print it by hand — on the paper, in the ink, and in every detail your guests receive.',
     servEyebrow: 'What we create', servTitle: 'Our services', procEyebrow: 'How we work', procTitle: 'An unhurried process',
-    quoteScript: 'with all our heart', quoteText: '"Amore Atelier turned an idea into the wedding we dreamed of. Every sign, every menu, perfect."', quoteAuthor: 'Ana & Diego — Hotel El Ganzo, Los Cabos',
+    closingEyebrow: 'Your celebration', closingTitle: 'Ready to design your wedding pieces?',
+    closingText: 'Tell us your date, venue, and what you envision. We reply personally.',
+    closingWa: 'Request a proposal on WhatsApp', closingContact: 'Go to Contact →',
     plannersEyebrow: 'Wedding Planners', plannersTitle: 'Your logistics partner for every wedding',
     plannersText: 'We work hand in hand with planners: an approval mockup before we print, clear production timelines, and on-site delivery and installation at your venue on the day. No last-minute surprises.',
     plannersCta: "Let's coordinate your next wedding",
@@ -107,10 +131,10 @@ window.AA_DEFAULTS = {
     svcPageTitle: 'Everything printed for your wedding', svcPageIntro: 'Bespoke design, carefully selected papers and refined finishes. Every piece is coordinated so your event feels of one piece.', svcCtaTitle: 'Shall we begin your stationery?',
     portTitle: 'Weddings we have dressed',
     contactTitle: "Let's talk about your wedding", contactIntro: 'Tell us your date and what you imagine. We reply personally, no templates.',
-    estudioVal: 'Los Cabos, B.C.S.', coberturaVal: 'All of Baja California Sur', formTitle: 'Request your quote',
+    estudioVal: 'Los Cabos, B.C.S.', coberturaVal: 'Los Cabos and La Paz', formTitle: 'Request your quote',
     footerDesc: "The printed art of the 'I do'. Bespoke wedding stationery and signage, from Los Cabos.",
     services: [
-      { title: 'Welcome signs', short: 'The first piece your guests see on arrival.', long: 'Large-format acrylic, mirror, wood or paper signs, hand-lettered and painted in our studio. Your custom welcome sign sets the tone the moment guests step into the venue.' },
+      { title: 'Welcome signs', short: 'The first piece your guests see on arrival.', long: 'Large-format acrylic, mirror, wood or paper signs, crafted with calligraphic typography and custom finishes in our studio. Your custom welcome sign sets the tone the moment guests step into the venue.' },
       { title: 'Seating charts', short: 'So every guest finds their place in style.', long: 'Clear, beautiful seating charts: by table, alphabetical or by family — delivered and installed on-site so it’s one less thing on your day-of checklist.' },
       { title: 'Table stationery', short: 'Menus, place cards and details in harmony.', long: 'Menus, place cards, table numbers and vow books — your day-of stationery, coordinated in one visual language and ready for your destination wedding.' },
       { title: 'Event signage', short: 'Guide your guests through every moment.', long: 'Ceremony, cocktail hour, dinner and party: directional signs and details, installed on-site so every moment flows without a doubt.' }
@@ -123,16 +147,125 @@ window.AA_DEFAULTS = {
   }
 };
 
-/* Image slots: id -> { defaultSrc, fit } — defaultSrc ships as a real asset; omit for an empty placeholder. */
+/* Image slots & curated portfolio — centralized local config (no Firebase required). */
 window.AA_IMAGE_SLOTS = {
-  'aa-hero': { defaultSrc: 'assets/hero-portada.jpeg', fit: 'contain' },
-  'aa-about1': { fit: 'cover' },
-  'aa-about2': { fit: 'cover' },
-  'aa-svc1': { defaultSrc: 'assets/svc-letreros.webp', fit: 'cover' },
-  'aa-svc2': { fit: 'cover' },
-  'aa-svc3': { defaultSrc: 'assets/svc-papeleria.webp', fit: 'cover' },
-  'aa-svc4': { fit: 'cover' },
-  'aa-g0': { fit: 'cover' }, 'aa-g1': { fit: 'cover' }, 'aa-g2': { fit: 'cover' },
-  'aa-g3': { fit: 'cover' }, 'aa-g4': { fit: 'cover' }, 'aa-g5': { fit: 'cover' },
-  'aa-g6': { fit: 'cover' }, 'aa-g7': { fit: 'cover' }, 'aa-g8': { fit: 'cover' }
+  'aa-about1': { defaultSrc: 'assets/aa-about1.webp', fit: 'cover', pos: '50% 50%' },
+  'aa-about2': { defaultSrc: 'assets/aa-about2.webp', fit: 'cover', pos: '50% 50%' },
+  'aa-svc1': { defaultSrc: 'assets/aa-svc1.webp', fit: 'cover', pos: '50.0% 78.8%' },
+  'aa-svc2': { defaultSrc: 'assets/aa-svc2.webp', fit: 'cover', pos: '50.0% 67.9%' },
+  'aa-svc3': { defaultSrc: 'assets/aa-svc3.webp', fit: 'cover', pos: '50.0% 49.8%' },
+  'aa-svc4': { defaultSrc: 'assets/aa-svc4.webp', fit: 'cover', pos: '50.0% 62.6%' }
 };
+
+window.AA_PORTFOLIO = [
+  {
+    id: 'p01',
+    src: 'assets/portfolio/08-lisa-mike-letrero-arco.webp',
+    cat: 'letreros',
+    ratio: '3 / 4',
+    pos: '50% 48%',
+    es: { title: 'Letrero medio arco con agaves', event: 'Lisa & Mike', tag: 'Letreros', alt: 'Letrero de bienvenida medio arco blanco para Lisa y Mike entre vegetación de Los Cabos' },
+    en: { title: 'Half-arch welcome sign among agaves', event: 'Lisa & Mike', tag: 'Welcome signs', alt: 'White half-arch wedding welcome sign for Lisa and Mike surrounded by desert flora in Los Cabos' }
+  },
+  {
+    id: 'p02',
+    src: 'assets/portfolio/10-ja-seating-take-a-shot.webp',
+    cat: 'seating',
+    ratio: '3 / 4',
+    pos: '50% 50%',
+    es: { title: 'Seating chart "Take a Shot & Take a Seat"', event: 'J | A', tag: 'Seating', alt: 'Seating chart arco blanco con caballitos de cerámica pintada estilo talavera azul' },
+    en: { title: '"Take a Shot & Take a Seat" seating chart', event: 'J | A', tag: 'Seating', alt: 'White arched seating chart displaying blue ceramic shot glasses for each wedding guest' }
+  },
+  {
+    id: 'p03',
+    src: 'assets/portfolio/02-heloise-maxime-menu-organza.webp',
+    cat: 'papeleria',
+    ratio: '3 / 4',
+    pos: '50% 50%',
+    es: { title: 'Menú con lazo de organza', event: 'Heloise & Maxime', tag: 'Papelería', alt: 'Menú de boda blanco atado con lazo de organza y tarjeta de lugar en tono terracota' },
+    en: { title: 'Menu with sheer organza ribbon', event: 'Heloise & Maxime', tag: 'Stationery', alt: 'White wedding menu tied with sheer organza ribbon alongside a terracotta place card' }
+  },
+  {
+    id: 'p04',
+    src: 'assets/portfolio/06-lisa-mike-unplugged-ceremony.webp',
+    cat: 'senaletica',
+    ratio: '4 / 3',
+    pos: '50% 50%',
+    es: { title: 'Señal "Unplugged Ceremony" en caballete', event: 'Lisa & Mike', tag: 'Señalética', alt: 'Letrero blanco sobre caballete de madera para ceremonia sin celulares en jardín' },
+    en: { title: 'Easel "Unplugged Ceremony" sign', event: 'Lisa & Mike', tag: 'Signage', alt: 'White unplugged ceremony wedding sign on a wooden easel surrounded by desert greenery' }
+  },
+  {
+    id: 'p05',
+    src: 'assets/portfolio/01-heloise-maxime-letrero-lino.webp',
+    cat: 'letreros',
+    ratio: '3 / 4',
+    pos: '50% 45%',
+    es: { title: 'Letrero de bienvenida en lino', event: 'Heloise & Maxime · Los Cabos', tag: 'Letreros', alt: 'Letrero de bienvenida en tela de lino blanco colgado en estructura de madera' },
+    en: { title: 'Linen welcome banner on wood frame', event: 'Heloise & Maxime · Los Cabos', tag: 'Welcome signs', alt: 'White linen wedding welcome banner hung on a wooden frame in Los Cabos' }
+  },
+  {
+    id: 'p06',
+    src: 'assets/portfolio/09-ja-talavera-etiqueta.webp',
+    cat: 'seating',
+    ratio: '1 / 1',
+    pos: '50% 50%',
+    es: { title: 'Detalle de talavera y etiqueta', event: 'J | A', tag: 'Seating', alt: 'Primer plano de caballito estilo talavera con etiqueta de invitado con tipografía caligráfica' },
+    en: { title: 'Talavera cup & calligraphic escort tag', event: 'J | A', tag: 'Seating', alt: 'Close-up of blue patterned ceramic cup with calligraphic guest seating tag' }
+  },
+  {
+    id: 'p07',
+    src: 'assets/portfolio/07-lisa-mike-menu-floral.webp',
+    cat: 'papeleria',
+    ratio: '3 / 4',
+    pos: '50% 50%',
+    es: { title: 'Menú con marco floral', event: 'Lisa & Mike', tag: 'Papelería', alt: 'Menú de boda vertical con marco floral en tonos coral y dorado sobre mesa vestida' },
+    en: { title: 'Floral-framed reception menu', event: 'Lisa & Mike', tag: 'Stationery', alt: 'Vertical wedding reception menu with coral and gold floral border on linen table' }
+  },
+  {
+    id: 'p08',
+    src: 'assets/portfolio/03-heloise-maxime-the-bar-lino.webp',
+    cat: 'senaletica',
+    ratio: '3 / 4',
+    pos: '50% 45%',
+    es: { title: 'Letrero "The Bar" en lino ilustrado', event: 'Heloise & Maxime', tag: 'Señalética', alt: 'Letrero colgante en lino para barra de cócteles con ilustraciones personalizadas' },
+    en: { title: 'Illustrated linen "The Bar" banner', event: 'Heloise & Maxime', tag: 'Signage', alt: 'Hanging linen cocktail bar menu featuring custom pet illustrations' }
+  },
+  {
+    id: 'p09',
+    src: 'assets/portfolio/04-heloise-maxime-place-cards.webp',
+    cat: 'seating',
+    ratio: '3 / 4',
+    pos: '50% 50%',
+    es: { title: 'Place cards terracota en madera', event: 'Heloise & Maxime', tag: 'Seating', alt: 'Tarjetas de lugar en tono terracota sobre bases de madera junto a rosas blancas' },
+    en: { title: 'Terracotta place cards on wood blocks', event: 'Heloise & Maxime', tag: 'Seating', alt: 'Terracotta guest place cards displayed on wooden blocks beneath white roses' }
+  },
+  {
+    id: 'p10',
+    src: 'assets/portfolio/11-mesa-gasa-salvia-menu.webp',
+    cat: 'papeleria',
+    ratio: '1 / 1',
+    pos: '50% 50%',
+    es: { title: 'Menú personalizado y servilleta salvia', event: 'Mesa de recepción', tag: 'Papelería', alt: 'Menú personalizado con nombre del invitado bajo servilleta de gasa verde salvia' },
+    en: { title: 'Personalized menu & sage gauze napkin', event: 'Reception table', tag: 'Stationery', alt: 'Personalized guest menu tucked under a sage green cheesecloth napkin' }
+  },
+  {
+    id: 'p11',
+    src: 'assets/portfolio/05-lisa-mike-programas-ceremonia.webp',
+    cat: 'senaletica',
+    ratio: '4 / 3',
+    pos: '50% 50%',
+    es: { title: 'Programas de ceremonia en sillas', event: 'Lisa & Mike', tag: 'Señalética', alt: 'Sillas de madera para ceremonia con programas festoneados colocados en cada asiento' },
+    en: { title: 'Ceremony fan programs on wooden chairs', event: 'Lisa & Mike', tag: 'Signage', alt: 'Wooden ceremony chairs styled with custom printed programs on each seat' }
+  },
+  {
+    id: 'p12',
+    src: 'assets/portfolio/12-eli-adolfo-abanicos.webp',
+    cat: 'papeleria',
+    ratio: '3 / 4',
+    pos: '50% 50%',
+    es: { title: 'Abanicos festoneados con base personalizada', event: 'Eli & Adolfo', tag: 'Papelería', alt: 'Abanico menú festoneado a rayas cálidas con nombre de invitado en base kraft' },
+    en: { title: 'Scalloped striped fan menus', event: 'Eli & Adolfo', tag: 'Stationery', alt: 'Scalloped striped wedding fan menu with personalized guest name on kraft handle' }
+  }
+];
+
+window.AA_FEATURED = ['p01', 'p02', 'p03'];
