@@ -250,12 +250,33 @@
     syncHeroVideo();
     onScroll();
   }
+  function isMobileHero() {
+    return !!(window.matchMedia && window.matchMedia('(max-width: 860px), (orientation: portrait) and (max-width: 1024px)').matches);
+  }
   /* Reproduce el video de portada solo cuando Inicio está visible, la pestaña está activa y no hay ahorro de datos */
   function syncHeroVideo() {
     const v = document.getElementById('aa-hero-video');
     if (!v) return;
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const saveData = !!(navigator.connection && navigator.connection.saveData);
+    const mobile = isMobileHero();
+    const mode = mobile ? 'mobile' : 'desktop';
+    const base = v.getAttribute('data-asset-base') || ((window.AA_ASSET_BASE || '') + 'assets/');
+    if (v.getAttribute('data-hero-mode') !== mode) {
+      v.poster = base + (mobile ? 'hero-mobile-poster.jpg' : 'hero-poster.jpg');
+      v.setAttribute('data-hero-mode', mode);
+      if (state.page === 'inicio' && !reduce && !saveData) {
+        while (v.firstChild) v.removeChild(v.firstChild);
+        const prefix = mobile ? 'hero-mobile' : 'hero-video';
+        [['webm', 'video/webm'], ['mp4', 'video/mp4']].forEach(([ext, type]) => {
+          const s = document.createElement('source');
+          s.src = base + prefix + '.' + ext;
+          s.type = type;
+          v.appendChild(s);
+        });
+        v.load();
+      }
+    }
     if (state.page === 'inicio' && !reduce && !saveData && !document.hidden) {
       v.muted = true;
       const pr = v.play();
@@ -670,7 +691,9 @@
     // Navbar transparente solo arriba del todo, sobre el video de portada
     const heroVideo = document.getElementById('aa-hero-video');
     if (nav) nav.classList.toggle('is-over-hero', !!heroVideo && state.page === 'inicio' && y <= 30);
-    if (heroVideo && state.page === 'inicio') heroVideo.style.transform = 'translateY(' + (y * 0.25) + 'px) scale(1.04)';
+    if (heroVideo && state.page === 'inicio') {
+      heroVideo.style.transform = isMobileHero() ? '' : 'translateY(' + (y * 0.25) + 'px) scale(1.04)';
+    }
   }
 
   /* ---------------- lang / content actions ---------------- */
@@ -811,6 +834,7 @@
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('hashchange', applyRoute);
     document.addEventListener('visibilitychange', syncHeroVideo);
+    window.addEventListener('resize', syncHeroVideo, { passive: true });
   }
 
   function init() {

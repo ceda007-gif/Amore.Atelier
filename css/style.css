@@ -703,6 +703,6 @@ body{font-weight:300;letter-spacing:.005em}
 .aa-langswitch button{opacity:.68}
 .aa-footer-bottom{opacity:.78}
 
-@media(max-width:860px){
-  .aa-hero-video{object-position:center center}
+@media(max-width:860px), (orientation:portrait) and (max-width:1024px){
+  .aa-hero-video{transform:none;object-position:center center}
 }

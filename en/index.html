@@ -158,10 +158,8 @@
         <p class="aa-hero-sub" data-t="heroSub">Hand-crafted welcome signs, seating charts and day-of stationery — bespoke pieces made in our Los Cabos studio for destination weddings that don't feel off-the-shelf.</p>
       </div>
       <div class="aa-hero-media" aria-hidden="true">
-        <video class="aa-hero-video" id="aa-hero-video" autoplay muted loop playsinline preload="metadata" poster="../assets/hero-poster.jpg">
-          <source src="../assets/hero-video.webm" type="video/webm">
-          <source src="../assets/hero-video.mp4" type="video/mp4">
-        </video>
+        <video class="aa-hero-video" id="aa-hero-video" autoplay muted loop playsinline preload="metadata" data-asset-base="../assets/"></video>
+        <script>(function(){var v=document.getElementById('aa-hero-video'),m=window.matchMedia&&window.matchMedia('(max-width: 860px), (orientation: portrait) and (max-width: 1024px)').matches,b=v.getAttribute('data-asset-base')||'../assets/',r=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches,s=navigator.connection&&navigator.connection.saveData;v.poster=b+(m?'hero-mobile-poster.jpg':'hero-poster.jpg');v.setAttribute('data-hero-mode',m?'mobile':'desktop');if(!r&&!s){var p=m?'hero-mobile':'hero-video';[['webm','video/webm'],['mp4','video/mp4']].forEach(function(t){var el=document.createElement('source');el.src=b+p+'.'+t[0];el.type=t[1];v.appendChild(el);});}})();</script>
         <div class="aa-hero-veil"></div>
       </div>
     </div>
