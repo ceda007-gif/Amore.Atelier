@@ -10,6 +10,10 @@ window.AA_I18N = {
     fVenue: 'Venue o zona del evento (opcional)', fVenuePh: 'Ej. Hotel, jardín o ciudad',
     fServicio: 'Servicio de interés', fMensaje: 'Mensaje', fMensajePh: 'Cuéntanos tu idea…', fEnviar: 'Enviar por WhatsApp',
     svcCtaLink: 'Solicitar propuesta →',
+    svcBack: '← Volver a servicios',
+    svcOpenCatalog: 'Ver catálogo →',
+    svcSoon: 'Próximamente agregaremos fotografías reales de este segmento. Escríbenos por WhatsApp para recibir muestras y cotizar.',
+    svcSoonCta: 'Solicitar catálogo por WhatsApp',
     svcWaMsg: (title) => `Hola Amore Atelier 👋 Me gustaría solicitar una propuesta para ${title}.`,
     lEstudio: 'Estudio', lCobertura: 'Cobertura', footNav: 'Navegación', footContacto: 'Contacto', footEditar: 'Editar sitio',
     copyright: '© 2026 Amore Atelier · Hecho con amor en Los Cabos',
@@ -46,6 +50,10 @@ window.AA_I18N = {
     fVenue: 'Event venue or area (optional)', fVenuePh: 'e.g. Hotel, venue or city',
     fServicio: 'Service of interest', fMensaje: 'Message', fMensajePh: 'Tell us your idea…', fEnviar: 'Send via WhatsApp',
     svcCtaLink: 'Request a proposal →',
+    svcBack: '← Back to services',
+    svcOpenCatalog: 'View catalog →',
+    svcSoon: 'We will be adding real photos for this segment soon. Message us on WhatsApp to request samples and a quote.',
+    svcSoonCta: 'Request catalog on WhatsApp',
     svcWaMsg: (title) => `Hi Amore Atelier 👋 I would like to request a proposal for ${title}.`,
     lEstudio: 'Studio', lCobertura: 'Coverage', footNav: 'Navigation', footContacto: 'Contact', footEditar: 'Edit site',
     copyright: '© 2026 Amore Atelier · Made with love in Los Cabos',
@@ -269,3 +277,54 @@ window.AA_PORTFOLIO = [
 ];
 
 window.AA_FEATURED = ['p01', 'p02', 'p03'];
+
+window.AA_SERVICE_CATALOGS = [
+  {
+    id: 'ws',
+    code: 'WS',
+    cover: 'assets/services/ws.jpg',
+    es: { title: 'Letreros de bienvenida', sub: 'Welcome Sign' },
+    en: { title: 'Welcome Signs', sub: 'Letreros de bienvenida' },
+    items: ['p01', 'p05']
+  },
+  {
+    id: 'sc',
+    code: 'SC',
+    cover: 'assets/services/sc.jpg',
+    es: { title: 'Asignación de asientos', sub: 'Seating Chart' },
+    en: { title: 'Seating Charts', sub: 'Asignación de asientos' },
+    items: ['p02', 'p06', 'p09']
+  },
+  {
+    id: 'm',
+    code: 'M',
+    cover: 'assets/services/m.jpg',
+    es: { title: 'Menús', sub: 'Menus' },
+    en: { title: 'Menus', sub: 'Menús' },
+    items: ['p03', 'p07', 'p10', 'p12']
+  },
+  {
+    id: 'pc',
+    code: 'PC',
+    cover: 'assets/services/pc.jpg',
+    es: { title: 'Tarjetas de nombres', sub: 'Place Cards' },
+    en: { title: 'Place Cards', sub: 'Tarjetas de nombres' },
+    items: ['p09', 'p06', 'p10']
+  },
+  {
+    id: 'wf',
+    code: 'WF',
+    cover: 'assets/services/wf.jpg',
+    es: { title: 'Recuerdos de boda', sub: 'Wedding Favors' },
+    en: { title: 'Wedding Favors', sub: 'Recuerdos de boda' },
+    items: []
+  },
+  {
+    id: 'we',
+    code: 'WE',
+    cover: 'assets/services/we.jpg',
+    es: { title: 'Esenciales de boda', sub: 'Wedding Essentials' },
+    en: { title: 'Wedding Essentials', sub: 'Esenciales de boda' },
+    items: ['p04', 'p08', 'p11']
+  }
+];
