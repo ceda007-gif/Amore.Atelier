@@ -418,10 +418,22 @@
   }
 
   /* ---------------- scroll effects ---------------- */
+  let lastScrollY = window.scrollY || 0;
   function onScroll() {
     const nav = document.getElementById('aa-nav');
+    const links = document.getElementById('aa-navlinks');
     const y = window.scrollY || 0;
-    if (nav) nav.classList.toggle('is-scrolled', y > 30);
+    if (nav) {
+      nav.classList.toggle('is-scrolled', y > 30);
+      if ((links && links.classList.contains('is-open')) || y <= 80) {
+        nav.classList.remove('is-nav-hidden');
+      } else if (y > lastScrollY + 6) {
+        nav.classList.add('is-nav-hidden');
+      } else if (y < lastScrollY - 6) {
+        nav.classList.remove('is-nav-hidden');
+      }
+    }
+    lastScrollY = y;
     const heroVideo = document.getElementById('aa-hero-video');
     if (nav) nav.classList.toggle('is-over-hero', !!heroVideo && state.page === 'inicio' && y <= 30);
     if (heroVideo && state.page === 'inicio') {

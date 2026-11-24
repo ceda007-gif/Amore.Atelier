@@ -2,14 +2,14 @@
    Amore Atelier — design tokens & base
    ============================================================ */
 :root{
-  --bg:#f8f0e3;
-  --cream2:#fdf8ef;
-  --burg:#730121;
-  --burg2:#52001a;
-  --ink:#3d242a;
-  --muted:#735a55;
-  --gold:#b3915c;
-  --gold-text:#836231;
+  --bg:#FFFFEE;
+  --cream2:#F5F3DC;
+  --burg:#38050D;
+  --burg2:#250308;
+  --ink:#26070C;
+  --muted:#4E3438;
+  --gold:#AFAE53;
+  --gold-text:#38050D;
 }
 
 *{box-sizing:border-box}
@@ -429,9 +429,9 @@ a{color:inherit}
    (capa de estilos sobre la base; borrar este bloque revierte)
    ============================================================ */
 :root{
-  --ivory:#fbf6ee;
-  --gold-l:#d9c29a;
-  --line:rgba(115,1,33,.12);
+  --ivory:#FFFFEE;
+  --gold-l:#AFAE53;
+  --line:#D8D4AD;
   --ease:cubic-bezier(.22,1,.36,1);
 }
 body{font-weight:300;letter-spacing:.005em}
@@ -458,10 +458,13 @@ body{font-weight:300;letter-spacing:.005em}
 .aa-link-underline:hover::after{transform:scaleX(.35)}
 
 /* ---------- Nav ---------- */
-#aa-nav{transition:padding .5s var(--ease),background .5s var(--ease),box-shadow .5s var(--ease),border-color .5s var(--ease),color .5s var(--ease)}
-.aa-navlink{font-size:12px;letter-spacing:.24em;font-weight:400;position:relative;border-bottom:none !important}
-.aa-navlink::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .5s var(--ease)}
-.aa-navlink:hover::after,.aa-navlink.is-active::after{transform:scaleX(1)}
+#aa-nav{transition:padding .5s var(--ease),background .5s var(--ease),box-shadow .5s var(--ease),border-color .5s var(--ease),color .5s var(--ease),opacity .35s var(--ease),transform .35s var(--ease)}
+#aa-nav.is-nav-hidden{opacity:0;transform:translateY(-10px);pointer-events:none}
+.aa-navlink{font-size:12px;letter-spacing:.24em;font-weight:400;position:relative;border-bottom:none !important;padding:7px 12px;transition:background .28s var(--ease),color .28s var(--ease),opacity .28s var(--ease)}
+.aa-navlink::after{content:"";position:absolute;left:12px;right:12px;bottom:0;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .5s var(--ease)}
+.aa-navlink.is-active::after{transform:scaleX(1)}
+.aa-navlink:hover,.aa-navlink:focus-visible{background:var(--gold) !important;color:var(--burg) !important;opacity:1;text-shadow:none !important}
+.aa-navlink:hover::after{transform:scaleX(0)}
 .aa-brand span{font-weight:400;letter-spacing:.22em;font-size:20px}
 
 /* ES / EN y Cotizar solo como texto limpio, sin contorno ni cuadro */
@@ -477,15 +480,15 @@ body{font-weight:300;letter-spacing:.005em}
 
 .aa-btn-pill{
   background:transparent !important;border:none !important;border-radius:0;
-  color:var(--burg);padding:6px 0;font-size:12px;letter-spacing:.24em;font-weight:500;
-  position:relative;width:auto;
+  color:var(--burg);padding:7px 12px;font-size:12px;letter-spacing:.24em;font-weight:500;
+  position:relative;width:auto;transition:background .28s var(--ease),color .28s var(--ease);
 }
 .aa-btn-pill::after{
-  content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--gold);
+  content:"";position:absolute;left:12px;right:12px;bottom:0;height:1px;background:var(--gold);
   transform:scaleX(0);transition:transform .5s var(--ease);
 }
-.aa-btn-pill:hover{background:transparent !important;transform:none}
-.aa-btn-pill:hover::after{transform:scaleX(1)}
+.aa-btn-pill:hover,.aa-btn-pill:focus-visible{background:var(--gold) !important;color:var(--burg) !important;transform:none;text-shadow:none !important}
+.aa-btn-pill:hover::after{transform:scaleX(0)}
 
 /* Nav transparente sobre el video */
 @media(min-width:861px){
@@ -520,9 +523,14 @@ body{font-weight:300;letter-spacing:.005em}
 .aa-hero-veil{
   position:absolute;inset:0;pointer-events:none;
   background:
-    linear-gradient(90deg,rgba(42,4,14,.82) 0%,rgba(42,4,14,.55) 38%,rgba(42,4,14,.12) 70%,rgba(42,4,14,0) 100%),
-    linear-gradient(0deg,rgba(42,4,14,.75) 0%,rgba(42,4,14,0) 45%),
-    linear-gradient(180deg,rgba(20,2,6,.45) 0%,rgba(20,2,6,0) 22%);
+    linear-gradient(90deg,rgba(28,6,11,.82) 0%,rgba(28,6,11,.55) 38%,rgba(28,6,11,.12) 70%,rgba(28,6,11,0) 100%),
+    linear-gradient(0deg,rgba(28,6,11,.75) 0%,rgba(28,6,11,0) 45%),
+    linear-gradient(180deg,rgba(20,18,16,.45) 0%,rgba(20,18,16,0) 22%);
+}
+.aa-hero--video::after{
+  content:"";position:absolute;left:0;right:0;bottom:-1px;height:clamp(140px,22vh,240px);
+  background:linear-gradient(180deg,transparent 0%,var(--burg) 92%,var(--burg) 100%);
+  pointer-events:none;z-index:1;
 }
 .aa-hero--video .aa-hero-copy{
   position:relative;z-index:2;max-width:760px;
@@ -557,7 +565,7 @@ body{font-weight:300;letter-spacing:.005em}
 }
 @media(max-width:860px){
   .aa-hero.aa-hero--video{display:flex !important;min-height:100svh !important}
-  .aa-hero-veil{background:linear-gradient(0deg,rgba(42,4,14,.92) 0%,rgba(42,4,14,.6) 45%,rgba(42,4,14,.15) 75%,rgba(20,2,6,.45) 100%)}
+  .aa-hero-veil{background:linear-gradient(0deg,rgba(28,6,11,.92) 0%,rgba(28,6,11,.6) 45%,rgba(28,6,11,.15) 75%,rgba(20,18,16,.45) 100%)}
   .aa-hero--video .aa-hero-copy{padding:120px 24px 92px}
   .aa-hero--video .aa-hero-sub{font-size:15.5px}
   .aa-hero-scroll{left:50%;right:auto;transform:translateX(-50%);bottom:18px}
@@ -577,7 +585,7 @@ body{font-weight:300;letter-spacing:.005em}
 .aa-manifesto{
   position:relative;
   background:
-    radial-gradient(ellipse at 50% 0%,rgba(217,194,154,.12),transparent 60%),
+    radial-gradient(ellipse at 50% 50%,rgba(175,174,83,.09),transparent 58%),
     var(--burg);
 }
 .aa-manifesto::before,.aa-manifesto::after{
@@ -722,7 +730,7 @@ body{font-weight:300;letter-spacing:.005em}
 /* ============================================================
    PASO 2 — Transición Manifesto, Obra seleccionada & Testimonio
    ============================================================ */
-.aa-manifesto{border-top:1px solid rgba(217,194,154,.28)}
+.aa-manifesto{border-top:none}
 
 .aa-featured{
   max-width:1320px;margin:0 auto;
@@ -785,3 +793,28 @@ body{font-weight:300;letter-spacing:.005em}
   .aa-svc-row{gap:28px;padding:36px 24px}
   .aa-svc-cta-link{margin-top:20px}
 }
+
+/* ============================================================
+   PALETA DEFINITIVA — Burgundy & Olive (#38050D / #AFAE53 / #FFFFEE)
+   ============================================================ */
+.aa-svc-card .aa-svc-n,.aa-svc-row-n,.aa-step-n,.aa-faq-icon,.aa-founders .aa-heart{color:var(--gold-text)}
+.aa-svc-card:hover .aa-svc-n{color:var(--gold-l)}
+.aa-step-n{background:var(--bg);border-color:var(--line)}
+.aa-planners-band .aa-btn-solid-lg{
+  background:var(--gold);color:var(--burg);font-weight:500;overflow:visible;
+  box-shadow:inset 0 0 0 1px var(--gold);
+}
+.aa-planners-band .aa-btn-solid-lg::before{
+  content:"";display:block;position:absolute;inset:4px;border:1px solid rgba(56,5,13,.45);
+  pointer-events:none;transition:inset .45s var(--ease),border-color .45s;z-index:1;
+}
+.aa-planners-band .aa-btn-solid-lg::after{background:var(--bg)}
+.aa-planners-band .aa-btn-solid-lg:hover{background:var(--gold);color:var(--burg)}
+.aa-planners-band .aa-btn-solid-lg:hover::before{inset:0;border-color:var(--burg)}
+.aa-cta-band:not(.aa-planners-band){background:var(--cream2);color:var(--ink)}
+.aa-cta-band:not(.aa-planners-band) h2{color:var(--ink)}
+.aa-cta-band:not(.aa-planners-band) .aa-btn-solid-lg{background:var(--burg);color:var(--bg)}
+.aa-cta-band:not(.aa-planners-band) .aa-btn-solid-lg::after{background:var(--gold)}
+.aa-cta-band:not(.aa-planners-band) .aa-btn-solid-lg:hover{background:var(--burg);color:var(--burg)}
+#aa-footer .aa-ig-btn{border-color:var(--gold-l)}
+#aa-footer .aa-ig-btn:hover{background:var(--bg);color:var(--burg2)}
