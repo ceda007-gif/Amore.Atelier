@@ -13,6 +13,7 @@
     form: { nombre: '', fecha: '', venue: '', servicio: '', mensaje: '' }
   };
   state.form.servicio = I18N[state.lang].selectOpts[0];
+  state.svcSegment = null;
 
   const $ = (s, r) => (r || document).querySelector(s);
   const $$ = (s, r) => Array.from((r || document).querySelectorAll(s));
@@ -196,17 +197,29 @@
   }
 
   /* ---------------- dynamic list builders ---------------- */
+  function buildLbGallery(list) {
+    const base = window.AA_ASSET_BASE || '';
+    return list.map((p) => {
+      const m = p[state.lang] || p.es;
+      return {
+        src: base + p.src,
+        alt: m.alt || m.title,
+        caption: m.title + (m.event ? ' — ' + m.event : '')
+      };
+    });
+  }
+
   function renderFeaturedWork() {
     const grid = document.getElementById('aa-featured-grid');
     if (!grid) return;
     const ids = window.AA_FEATURED || [];
     const items = window.AA_PORTFOLIO || [];
     const modifiers = ['aa-featured-item--lead', 'aa-featured-item--mid', 'aa-featured-item--detail'];
+    const featItems = ids.map((id) => items.find((item) => item.id === id)).filter(Boolean);
+    const lbList = buildLbGallery(featItems);
 
     grid.innerHTML = '';
-    ids.forEach((id, i) => {
-      const p = items.find((item) => item.id === id);
-      if (!p) return;
+    featItems.forEach((p, i) => {
       const meta = p[state.lang] || p.es;
       const fig = document.createElement('figure');
       fig.className = 'aa-featured-item ' + (modifiers[i] || '');
@@ -219,6 +232,9 @@
         pos: p.pos || '50% 50%',
         alt: meta.alt || meta.title,
         placeholder: meta.title,
+        caption: meta.title + ' — ' + meta.event,
+        gallery: lbList,
+        index: i,
         className: 'aa-featured-photo'
       });
       frame.appendChild(slot);
@@ -235,11 +251,134 @@
     });
   }
 
+  function renderServicesCatalog() {
+    const rows = document.getElementById('aa-svc-rows');
+    if (!rows) return;
+    const T = t();
+    const cats = window.AA_SERVICE_CATALOGS || [];
+    const items = window.AA_PORTFOLIO || [];
+    const base = window.AA_ASSET_BASE || '';
+    rows.innerHTML = '';
+
+    if (!state.svcSegment) {
+      const grid = document.createElement('div');
+      grid.className = 'aa-svc-covers';
+      cats.forEach((seg) => {
+        const meta = seg[state.lang] || seg.es;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'aa-svc-cover';
+        btn.setAttribute('data-seg', seg.id);
+
+        const frame = document.createElement('div');
+        frame.className = 'aa-svc-cover-frame';
+        const img = document.createElement('img');
+        img.src = base + seg.cover;
+        img.alt = meta.title + ' — ' + meta.sub;
+        img.loading = 'eager';
+        img.decoding = 'async';
+        frame.appendChild(img);
+
+        const cap = document.createElement('div');
+        cap.className = 'aa-svc-cover-cap';
+        cap.innerHTML = '<span class="aa-svc-cover-sub"></span><strong class="aa-svc-cover-title"></strong><span class="aa-svc-cover-cta"></span>';
+        cap.querySelector('.aa-svc-cover-sub').textContent = meta.sub;
+        cap.querySelector('.aa-svc-cover-title').textContent = meta.title;
+        cap.querySelector('.aa-svc-cover-cta').textContent = T.svcOpenCatalog;
+
+        btn.appendChild(frame);
+        btn.appendChild(cap);
+        btn.addEventListener('click', () => {
+          state.svcSegment = seg.id;
+          renderServicesCatalog();
+          rows.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        grid.appendChild(btn);
+      });
+      rows.appendChild(grid);
+      return;
+    }
+
+    const seg = cats.find((s) => s.id === state.svcSegment) || cats[0];
+    if (!seg) return;
+    const meta = seg[state.lang] || seg.es;
+    const segItems = (seg.items || []).map((id) => items.find((p) => p.id === id)).filter(Boolean);
+    const lbList = buildLbGallery(segItems);
+
+    const wrap = document.createElement('div');
+    wrap.className = 'aa-svc-catalog';
+
+    const head = document.createElement('div');
+    head.className = 'aa-svc-catalog-head';
+    head.innerHTML =
+      '<button type="button" class="aa-link-underline aa-svc-back"></button>' +
+      '<div class="aa-svc-catalog-titlewrap"><span class="aa-eyebrow"></span><h2></h2></div>' +
+      '<a class="aa-link-underline aa-svc-cta-link" target="_blank" rel="noopener"></a>';
+    const backBtn = head.querySelector('.aa-svc-back');
+    backBtn.textContent = T.svcBack;
+    backBtn.addEventListener('click', () => {
+      state.svcSegment = null;
+      renderServicesCatalog();
+    });
+    head.querySelector('.aa-eyebrow').textContent = meta.sub;
+    head.querySelector('h2').textContent = meta.title;
+    const ctaLink = head.querySelector('.aa-svc-cta-link');
+    ctaLink.textContent = T.svcCtaLink;
+    ctaLink.href = waHref(T.svcWaMsg(meta.title));
+    wrap.appendChild(head);
+
+    if (segItems.length) {
+      const gal = document.createElement('div');
+      gal.className = 'aa-svc-catalog-grid';
+      segItems.forEach((p, idx) => {
+        const pm = p[state.lang] || p.es;
+        const fig = document.createElement('figure');
+        fig.className = 'aa-gallery-item';
+
+        const frame = document.createElement('div');
+        frame.className = 'aa-gallery-frame';
+        frame.style.aspectRatio = p.ratio || '3 / 4';
+        const slot = window.AACreateImageSlot('cat-' + seg.id + '-' + p.id, {
+          src: p.src,
+          pos: p.pos || '50% 50%',
+          alt: pm.alt || pm.title,
+          placeholder: pm.title,
+          caption: pm.title + ' — ' + pm.event,
+          gallery: lbList,
+          index: idx,
+          className: 'aa-gallery-photo'
+        });
+        frame.appendChild(slot);
+
+        const cap = document.createElement('figcaption');
+        cap.className = 'aa-gallery-cap';
+        cap.innerHTML = '<strong class="aa-gallery-title"></strong><span class="aa-gallery-event"></span>';
+        cap.querySelector('.aa-gallery-title').textContent = pm.title;
+        cap.querySelector('.aa-gallery-event').textContent = pm.event;
+
+        fig.appendChild(frame);
+        fig.appendChild(cap);
+        gal.appendChild(fig);
+      });
+      wrap.appendChild(gal);
+    } else {
+      const empty = document.createElement('div');
+      empty.className = 'aa-svc-empty';
+      empty.innerHTML = '<p></p><a class="aa-btn-solid-lg" target="_blank" rel="noopener"></a>';
+      empty.querySelector('p').textContent = T.svcSoon;
+      const waBtn = empty.querySelector('a');
+      waBtn.textContent = T.svcSoonCta;
+      waBtn.href = waHref(T.svcWaMsg(meta.title));
+      wrap.appendChild(empty);
+    }
+
+    rows.appendChild(wrap);
+  }
+
   function renderServicesAndSteps() {
     const grid = document.getElementById('aa-services-grid');
     if (!grid) return;
     const C = c(), T = t();
-    const svcSlots = ['aa-svc1', 'aa-svc2', 'aa-svc3', 'aa-svc4'];
     const svcHref = urlForPage('servicios') || '#/servicios';
 
     grid.innerHTML = '';
@@ -270,31 +409,7 @@
       proc.appendChild(div);
     });
 
-    const rows = document.getElementById('aa-svc-rows');
-    rows.innerHTML = '';
-    C.services.forEach((svc, i) => {
-      const row = document.createElement('div');
-      row.className = 'aa-svc-row';
-      row.setAttribute('data-reveal', '');
-      const slot = window.AACreateImageSlot(svcSlots[i], { placeholder: svc.title, alt: svc.title, className: 'aa-svc-row-photo' });
-      slot.style.order = i % 2 === 0 ? '0' : '2';
-      const textWrap = document.createElement('div');
-      textWrap.style.order = '1';
-      const tagsHtml = T.tags[i].map(() => '<li></li>').join('');
-      textWrap.innerHTML =
-        '<span class="aa-svc-row-n">0' + (i + 1) + '</span><h2></h2><p></p>' +
-        '<ul class="aa-tag-list">' + tagsHtml + '</ul>' +
-        '<a class="aa-link-underline aa-svc-cta-link" target="_blank" rel="noopener"></a>';
-      textWrap.querySelector('h2').textContent = svc.title;
-      textWrap.querySelector('p').textContent = svc.long;
-      $$('li', textWrap).forEach((li, j) => { li.textContent = T.tags[i][j]; });
-      const ctaLink = textWrap.querySelector('.aa-svc-cta-link');
-      ctaLink.textContent = T.svcCtaLink;
-      ctaLink.href = waHref(T.svcWaMsg(svc.title));
-      row.appendChild(slot);
-      row.appendChild(textWrap);
-      rows.appendChild(row);
-    });
+    renderServicesCatalog();
   }
 
   function renderGallery() {
@@ -302,6 +417,7 @@
     if (!filtersEl) return;
     const T = t();
     const items = window.AA_PORTFOLIO || [];
+    const lbList = buildLbGallery(items);
 
     filtersEl.innerHTML = '';
     [{ key: 'todos' }, { key: 'letreros' }, { key: 'seating' }, { key: 'papeleria' }, { key: 'senaletica' }].forEach((f) => {
@@ -316,7 +432,7 @@
 
     const gal = document.getElementById('aa-gallery');
     gal.innerHTML = '';
-    items.forEach((p) => {
+    items.forEach((p, idx) => {
       const meta = p[state.lang] || p.es;
       const fig = document.createElement('figure');
       fig.className = 'aa-gallery-item';
@@ -331,6 +447,9 @@
         pos: p.pos || '50% 50%',
         alt: meta.alt || meta.title,
         placeholder: meta.title,
+        caption: meta.title + ' — ' + meta.event,
+        gallery: lbList,
+        index: idx,
         className: 'aa-gallery-photo'
       });
       frame.appendChild(slot);
