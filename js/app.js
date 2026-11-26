@@ -9,7 +9,7 @@
     page: 'inicio',
     filter: 'todos',
     content: JSON.parse(JSON.stringify(DEFAULTS)),
-    settings: { showNavCta: true, showHeroCta1: false, showHeroCta2: false, showPortfolio: true },
+    settings: { showNavCta: true, showHeroCta1: false, showHeroCta2: false, showPortfolio: false },
     form: { nombre: '', fecha: '', venue: '', servicio: '', mensaje: '' }
   };
   state.form.servicio = I18N[state.lang].selectOpts[0];
@@ -72,6 +72,10 @@
   function applyRoute() {
     const p = pageFromHash();
     if (p === 'portafolio' && !state.settings.showPortfolio) {
+      if (window.AA_DEFAULT_PAGE === 'portafolio' && location.protocol !== 'file:') {
+        location.replace(urlForPage('inicio') || '../');
+        return;
+      }
       location.hash = '';
       return;
     }
